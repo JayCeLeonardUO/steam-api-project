@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "cs670"
+version = "0.1.0"
+description = ""
+authors = ["JayCe Leonard <160792162+JayCeLeonardUO@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pytest = "^8.3.5"
+numpy = "^2.2.3"
+pandas = "^2.2.3"
+ruff = "^0.9.10"
+requests = "^2.32.3"
+scikit-learn = "^1.6.1"
+matplotlib = "^3.10.1"
+jupyter = "^1.1.1"
+notebook = "^7.3.2"
+yfinance = "^0.2.54"
+tqdm = "^4.67.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
