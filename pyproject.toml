@@ -18,6 +18,10 @@ jupyter = "^1.1.1"
 notebook = "^7.3.2"
 yfinance = "^0.2.54"
 tqdm = "^4.67.1"
+kagglehub = "^0.3.10"
+optuna = "^4.2.1"
+seaborn = "^0.13.2"
+autoviz = "^0.1.905"
 
 
 [build-system]
