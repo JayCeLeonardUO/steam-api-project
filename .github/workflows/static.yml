@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy HTML to GitHub Pages
+name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
@@ -28,21 +28,27 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        
+      # Create index.html that redirects to your Quarto output
+      - name: Create redirect index.html
+        run: |
+          echo '<!DOCTYPE html>
+          <html>
+            <head>
+              <meta http-equiv="refresh" content="0; url=notebooks/qmdstuff/final.html">
+              <title>Steam API Project</title>
+            </head>
+            <body>
+              <p>Redirecting to <a href="notebooks/qmdstuff/final.html">the project page</a>...</p>
+            </body>
+          </html>' > index.html
       
-      # Create directory for the artifact
-      - name: Create artifact directory
-        run: mkdir -p public
-      
-      # Copy the specific HTML file to be the index.html in the public directory
-      - name: Copy specific HTML file as index.html
-        run: cp notebooks/qmdstuff/final.html public/index.html
-      
-      # Upload only the public directory containing your HTML
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'public'
-      
+          # Upload entire repository including the original HTML and the redirect
+          path: '.'
+          
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
