@@ -6,3 +6,5 @@
 *.zip
 *.deb
 csvs/kaggle/games.json
+# But not .png files in this specific directory
+!notebooks/qmdstuff/**/*.png
