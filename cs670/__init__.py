@@ -3,13 +3,16 @@ import os
 import csv
 import json
 import pandas as pd
-
+import polars as pl
+from . import quarto_helpers as qh
 
 def respons_to_pd_appid(response_data, appid) -> pd.DataFrame:
     return pd.DataFrame([response_data[str(appid)]["data"]])
 
-
 class apiUrls:
+    def __init__(self):
+        raise Exception("StaticClass cannot be instantiated")
+
     @staticmethod
     def steam_url():
         return "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
@@ -41,6 +44,21 @@ class LocalPaths:
     @staticmethod
     def app_detail_csv_path():
         return os.environ.get("CSV_APPDETAIL", "app_details.csv")
+
+    @staticmethod
+    def kaggle_dataset():
+        if fpath := os.environ["CSV_STEAM2025"]:
+            return fpath
+
+        # Get the directory of the current file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # Create path to ../csv/kaggle/app_details.csv
+        kaggle_path = os.path.join(current_dir, "..", "csvs", "kaggle", "games.csv")
+        return kaggle_path
+    def fpath():
+        # Load the data
+        fpath_cached = "/home/jpleona/.cache/kagglehub/datasets/artermiloff/steam-games-dataset/versions/2"
+        return fpath_cached + "/games_march2025_cleaned.csv"
 
 
 class SteamCaller:
@@ -75,6 +93,11 @@ class SteamCaller:
         data_df = respons_to_pd_appid(data, app_id)
         return data_df
 
+    @staticmethod
+    def get_steam2025_pl():
+        fpath = LocalPaths.kaggle_dataset()
+        pl.read_csv(fpath)
+
 
 class CsvManager:
     @staticmethod
@@ -88,6 +111,7 @@ class CsvManager:
         Returns:
             pandas.DataFrame: DataFrame containing the CSV data, or None if file doesn't exist.
         """
+
         if path is None:
             fpath = LocalPaths.csv_path()
         else:
@@ -116,6 +140,15 @@ class CsvManager:
         else:
             return None
 
+    @staticmethod
+    def get_kaggle_steam2025_df() -> pl.DataFrame:
+        fpath = LocalPaths.kaggle_dataset()
+        df = pl.read_csv(fpath, truncate_ragged_lines=True)
+        return df
+    
+    def get_steam2025_df():
+        fpath = LocalPaths.fpath()
+        return pd.read_csv(fpath)
 
 def get_csv_df(path: str | None = None):
     """

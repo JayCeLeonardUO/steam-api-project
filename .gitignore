@@ -2,3 +2,7 @@
 *.png
 *.csv
 *.lock
+*.pkl
+*.zip
+*.deb
+csvs/kaggle/games.json
