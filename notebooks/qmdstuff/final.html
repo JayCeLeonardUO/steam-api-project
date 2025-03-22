@@ -99,25 +99,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-acquisition" id="toc-data-acquisition" class="nav-link" data-scroll-target="#data-acquisition">Data Acquisition</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
-  <li><a href="#steam-metrics-background" id="toc-steam-metrics-background" class="nav-link" data-scroll-target="#steam-metrics-background">Steam Metrics Background</a>
-  <ul class="collapse">
-  <li><a href="#concurrent-players" id="toc-concurrent-players" class="nav-link" data-scroll-target="#concurrent-players">Concurrent Players</a></li>
-  <li><a href="#review-percentages" id="toc-review-percentages" class="nav-link" data-scroll-target="#review-percentages">Review Percentages</a></li>
-  <li><a href="#metacritic-integration" id="toc-metacritic-integration" class="nav-link" data-scroll-target="#metacritic-integration">Metacritic Integration</a></li>
-  </ul></li>
-  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a>
-  <ul class="collapse">
-  <li><a href="#game-volume-prediction" id="toc-game-volume-prediction" class="nav-link" data-scroll-target="#game-volume-prediction"><strong>Game Volume Prediction</strong>:</a></li>
-  <li><a href="#are-older-games-blocking-people-from-trying-new-games" id="toc-are-older-games-blocking-people-from-trying-new-games" class="nav-link" data-scroll-target="#are-older-games-blocking-people-from-trying-new-games"><strong>Are Older Games Blocking People from Trying New Games?</strong>:</a></li>
-  <li><a href="#what-factors-are-most-impactful-for-getting-new-players-to-join" id="toc-what-factors-are-most-impactful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-factors-are-most-impactful-for-getting-new-players-to-join"><strong>What “Factors” Are Most Impactful for Getting New Players to Join?</strong>:</a></li>
-  <li><a href="#can-i-predict-larger-competitors-through-indirect-predictors" id="toc-can-i-predict-larger-competitors-through-indirect-predictors" class="nav-link" data-scroll-target="#can-i-predict-larger-competitors-through-indirect-predictors"><strong>Can I Predict Larger Competitors Through Indirect Predictors?</strong>:</a></li>
-  </ul></li>
-  <li><a href="#liniar-regression---game-volume-prediction" id="toc-liniar-regression---game-volume-prediction" class="nav-link" data-scroll-target="#liniar-regression---game-volume-prediction">Liniar Regression - Game volume prediction</a>
+  <li><a href="#steam-metrics-background" id="toc-steam-metrics-background" class="nav-link" data-scroll-target="#steam-metrics-background">Steam Metrics Background</a></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
+  <li><a href="#game-volume-prediction" id="toc-game-volume-prediction" class="nav-link" data-scroll-target="#game-volume-prediction">1. Game volume prediction</a>
   <ul class="collapse">
   <li><a href="#volume-prediction-2025" id="toc-volume-prediction-2025" class="nav-link" data-scroll-target="#volume-prediction-2025">Volume Prediction 2025</a></li>
-  <li><a href="#understanding-steams-game-growth-pattern" id="toc-understanding-steams-game-growth-pattern" class="nav-link" data-scroll-target="#understanding-steams-game-growth-pattern">Understanding Steam’s Game Growth Pattern</a></li>
+  <li><a href="#analysis---understanding-steams-game-growth-pattern" id="toc-analysis---understanding-steams-game-growth-pattern" class="nav-link" data-scroll-target="#analysis---understanding-steams-game-growth-pattern">analysis - Understanding Steam’s Game Growth Pattern</a></li>
   </ul></li>
-  <li><a href="#are-older-game-blocking-people-from-trying-new-games" id="toc-are-older-game-blocking-people-from-trying-new-games" class="nav-link" data-scroll-target="#are-older-game-blocking-people-from-trying-new-games">Are older Game blocking people from trying new games?</a>
+  <li><a href="#are-older-game-blocking-people-from-trying-new-games" id="toc-are-older-game-blocking-people-from-trying-new-games" class="nav-link" data-scroll-target="#are-older-game-blocking-people-from-trying-new-games">2 Are older Game blocking people from trying new games?</a>
   <ul class="collapse">
   <li><a href="#support-vector-classifier" id="toc-support-vector-classifier" class="nav-link" data-scroll-target="#support-vector-classifier">Support Vector Classifier</a>
   <ul class="collapse">
@@ -128,19 +117,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#market-volume-proxy-explanation" id="toc-market-volume-proxy-explanation" class="nav-link" data-scroll-target="#market-volume-proxy-explanation">Market Volume Proxy Explanation</a></li>
   </ul></li>
-  <li><a href="#recent-activity-value-analysis" id="toc-recent-activity-value-analysis" class="nav-link" data-scroll-target="#recent-activity-value-analysis">Recent Activity Value Analysis</a></li>
-  <li><a href="#volume-density-visualizations-1" id="toc-volume-density-visualizations-1" class="nav-link" data-scroll-target="#volume-density-visualizations-1">Volume Density Visualizations</a></li>
+  <li><a href="#analysis---recent-activity-value" id="toc-analysis---recent-activity-value" class="nav-link" data-scroll-target="#analysis---recent-activity-value">analysis - Recent Activity Value</a></li>
+  <li><a href="#analysis---market-volume-density-kde" id="toc-analysis---market-volume-density-kde" class="nav-link" data-scroll-target="#analysis---market-volume-density-kde">analysis - Market Volume Density KDE</a></li>
   </ul></li>
-  <li><a href="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join" id="toc-what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join">What are “factors” are most impactiful for getting new players to join?</a>
+  <li><a href="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join" id="toc-what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join">3 What are “factors” are most impactiful for getting new players to join?</a>
   <ul class="collapse">
-  <li><a href="#pca---discussion" id="toc-pca---discussion" class="nav-link" data-scroll-target="#pca---discussion">PCA - Discussion</a></li>
+  <li><a href="#analysis---pca" id="toc-analysis---pca" class="nav-link" data-scroll-target="#analysis---pca">analysis - PCA</a></li>
   </ul></li>
-  <li><a href="#market-competitiveness-prediction-through-indirect-predictors" id="toc-market-competitiveness-prediction-through-indirect-predictors" class="nav-link" data-scroll-target="#market-competitiveness-prediction-through-indirect-predictors">Market Competitiveness Prediction Through Indirect Predictors</a>
+  <li><a href="#market-competitiveness-prediction-through-indirect-predictors" id="toc-market-competitiveness-prediction-through-indirect-predictors" class="nav-link" data-scroll-target="#market-competitiveness-prediction-through-indirect-predictors">4 Market Competitiveness Prediction Through Indirect Predictors</a>
   <ul class="collapse">
   <li><a href="#rf-experiment" id="toc-rf-experiment" class="nav-link" data-scroll-target="#rf-experiment">RF experiment</a>
   <ul class="collapse">
-  <li><a href="#misclassification-heatmap-analysis" id="toc-misclassification-heatmap-analysis" class="nav-link" data-scroll-target="#misclassification-heatmap-analysis">Misclassification Heatmap Analysis</a></li>
-  <li><a href="#cross-validation-summary" id="toc-cross-validation-summary" class="nav-link" data-scroll-target="#cross-validation-summary">Cross-Validation Summary</a></li>
+  <li><a href="#analysis---misclassification-heatmap" id="toc-analysis---misclassification-heatmap" class="nav-link" data-scroll-target="#analysis---misclassification-heatmap">analysis - Misclassification Heatmap</a></li>
+  <li><a href="#analysis---cross-validation-summary" id="toc-analysis---cross-validation-summary" class="nav-link" data-scroll-target="#analysis---cross-validation-summary">analysis - Cross-Validation Summary</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#impact" id="toc-impact" class="nav-link" data-scroll-target="#impact">Impact</a>
@@ -188,7 +177,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="abstract" class="level1">
 <h1>Abstract</h1>
-<p>This study investigates the “invisible games” phenomenon on Steam’s digital marketplace through comprehensive analysis of 89,618 game titles. Our findings challenge common perceptions about marketplace entrenchment by demonstrating that established blockbusters occupy only 0.4% of the catalog while still commanding significant player attention. Random Forest modeling (achieving 0.992 accuracy, 0.863 precision) reveals that recent positive review percentage (0.3560 importance) is substantially more predictive of market competitiveness than any volume-based metric, highlighting player rapport as the critical factor in sustained commercial viability. The temporal analysis identifies a natural decay pattern in game engagement (steepest between 3-5 years post-release), creating opportunities for new entrants despite apparent market saturation. Approximately 37% of earnest commercial attempts fall below critical visibility thresholds, suggesting significant market inefficiencies, while 12.4% of games achieve at least moderate success (10+ recent reviews). Support Vector Machine classification demonstrates that the marketplace remains accessible to quality new entries, with player engagement patterns naturally diminishing for even successful legacy games over time. These findings offer evidence-based insights for developers, suggesting a focus on community engagement rather than competing directly with established titles.</p>
+<p>This study investigates the “invisible games” phenomenon on Steam’s digital marketplace through comprehensive analysis of 89,618 game titles. Our findings challenge common perceptions about marketplace entrenchment by demonstrating that established blockbusters occupy only 0.4% of the catalog while still commanding significant player attention. Random Forest modeling (achieving 0.992 accuracy, 0.863 precision) reveals that recent positive review percentage (0.3560 importance) is substantially more predictive of market competitiveness than any volume-based metric, highlighting player rapport as the critical factor in sustained commercial viability. The temporal analysis identifies a natural decay pattern in game engagement (steepest between 3-5 years post-release), creating opportunities for new entrants despite apparent market saturation. Support Vector Machine classification demonstrates that the marketplace remains accessible to quality new entries, with player engagement patterns naturally diminishing for even successful legacy games over time. These findings offer evidence-based insights for developers, suggesting a focus on community engagement rather than competing directly with established titles.</p>
 </section>
 <section id="limitations" class="level1">
 <h1>Limitations</h1>
@@ -319,42 +308,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="steam-metrics-background" class="level1">
 <h1>Steam Metrics Background</h1>
-<section id="concurrent-players" class="level2">
-<h2 class="anchored" data-anchor-id="concurrent-players">Concurrent Players</h2>
-<p>Concurrent players measures users simultaneously playing a game. High counts (10,000+) indicate strong engagement, while 1,000+ typically ensures commercial viability. This metric fluctuates with updates, streaming popularity, and seasonal events.</p>
-</section>
-<section id="review-percentages" class="level2">
-<h2 class="anchored" data-anchor-id="review-percentages">Review Percentages</h2>
-<p>Steam separates ratings into “Recent” (last 30 days) and “Overall” (all-time) percentages, showing the proportion of positive reviews. Recent percentages respond quickly to changes, while Overall provides historical context. Significant disparities between these metrics typically indicate major changes in quality or business decisions.</p>
-</section>
-<section id="metacritic-integration" class="level2">
-<h2 class="anchored" data-anchor-id="metacritic-integration">Metacritic Integration</h2>
-<p>Steam displays Metacritic scores (0-100) for professionally reviewed games. Research suggests scores above 75 correlate with better commercial performance, while scores below 50 can significantly impact sales potential regardless of marketing budget. Unlike user reviews, these scores remain static after initial release unless a remaster is released.</p>
-</section>
+<p><strong>Concurrent Players</strong> Concurrent players measures users simultaneously playing a game. High counts (10,000+) indicate strong engagement, while 1,000+ typically ensures commercial viability. This metric fluctuates with updates, streaming popularity, and seasonal events.</p>
+<p><strong>Review Percentages</strong> Steam separates ratings into “Recent” (last 30 days) and “Overall” (all-time) percentages, showing the proportion of positive reviews. Recent percentages respond quickly to changes, while Overall provides historical context. Significant disparities between these metrics typically indicate major changes in quality or business decisions.</p>
+<p><strong>Metacritic Integration</strong> Steam displays Metacritic scores (0-100) for professionally reviewed games. Research suggests scores above 75 correlate with better commercial performance, while scores below 50 can significantly impact sales potential regardless of marketing budget. Unlike user reviews, these scores remain static after initial release unless a remaster is released.</p>
 </section>
 <section id="research-questions" class="level1">
 <h1>Research Questions</h1>
 <p>This research investigates several critical aspects of the Steam gaming marketplace ecosystem through data analysis and modeling techniques to provide actionable insights for game developers, platform operators, and industry stakeholders.</p>
-<section id="game-volume-prediction" class="level2">
-<h2 class="anchored" data-anchor-id="game-volume-prediction"><strong>Game Volume Prediction</strong>:</h2>
-<p>How has the Steam marketplace grown over time, and what mathematical models best describe this growth pattern? Can we accurately predict future marketplace volume based on historical trends? This analysis examines exponential, linear, quadratic, and cubic models to determine which best characterizes the platform’s expansion trajectory and provides reliable forecasting.</p>
-</section>
-<section id="are-older-games-blocking-people-from-trying-new-games" class="level2">
-<h2 class="anchored" data-anchor-id="are-older-games-blocking-people-from-trying-new-games"><strong>Are Older Games Blocking People from Trying New Games?</strong>:</h2>
-<p>To what extent do established legacy titles create barriers to entry for new releases? This investigation challenges the common perception that the marketplace is “entrenched” by quantifying the proportional influence of blockbuster games and analyzing temporal engagement patterns to determine if market saturation truly prevents new titles from finding audiences.</p>
-</section>
-<section id="what-factors-are-most-impactful-for-getting-new-players-to-join" class="level2">
-<h2 class="anchored" data-anchor-id="what-factors-are-most-impactful-for-getting-new-players-to-join"><strong>What “Factors” Are Most Impactful for Getting New Players to Join?</strong>:</h2>
-<p>Which game attributes and performance metrics most strongly correlate with commercial success and player engagement? This analysis evaluates user review patterns, pricing strategies, and content characteristics to identify the critical drivers of player adoption and community growth, with particular focus on the relative importance of quality versus marketing volume.</p>
-</section>
-<section id="can-i-predict-larger-competitors-through-indirect-predictors" class="level2">
-<h2 class="anchored" data-anchor-id="can-i-predict-larger-competitors-through-indirect-predictors"><strong>Can I Predict Larger Competitors Through Indirect Predictors?</strong>:</h2>
-<p>Is it possible to develop reliable models that identify market competitors based on indirect engagement metrics rather than direct sales figures? This exploratory research implements Support Vector Machine (SVM) classification and Random Forest modeling to determine if publicly available data can effectively predict commercial viability and competitive position within the marketplace.</p>
+<ol type="1">
+<li><p><strong>Game Volume Prediction</strong>: How has the Steam marketplace grown over time, and what mathematical models best describe this growth pattern? Can we accurately predict future marketplace volume based on historical trends? This analysis examines exponential, linear, quadratic, and cubic models to determine which best characterizes the platform’s expansion trajectory and provides reliable forecasting.</p></li>
+<li><p><strong>Are Older Games Blocking People from Trying New Games?</strong>: To what extent do established legacy titles create barriers to entry for new releases? This investigation challenges the common perception that the marketplace is “entrenched” by quantifying the proportional influence of blockbuster games and analyzing temporal engagement patterns to determine if market saturation truly prevents new titles from finding audiences.</p></li>
+<li><p><strong>What “Factors” Are Most Impactful for Getting New Players to Join?</strong>: Which game attributes and performance metrics most strongly correlate with commercial success and player engagement? This analysis evaluates user review patterns, pricing strategies, and content characteristics to identify the critical drivers of player adoption and community growth, with particular focus on the relative importance of quality versus marketing volume.</p></li>
+<li><p><strong>Can I Predict Larger Competitors Through Indirect Predictors?</strong>: Is it possible to develop reliable models that identify market competitors based on indirect engagement metrics rather than direct sales figures? This exploratory research implements Support Vector Machine (SVM) classification and Random Forest modeling to determine if publicly available data can effectively predict commercial viability and competitive position within the marketplace.</p></li>
+</ol>
 <p>Through these interconnected research questions, the study aims to provide evidence-based insights into the complex dynamics of digital game distribution and help developers navigate an increasingly challenging competitive landscape.</p>
 </section>
-</section>
-<section id="liniar-regression---game-volume-prediction" class="level1">
-<h1>Liniar Regression - Game volume prediction</h1>
+<section id="game-volume-prediction" class="level1">
+<h1>1. Game volume prediction</h1>
 <div id="cell-6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
@@ -431,15 +401,17 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 </div>
 </div>
 </section>
-<section id="understanding-steams-game-growth-pattern" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-steams-game-growth-pattern">Understanding Steam’s Game Growth Pattern</h2>
+<section id="analysis---understanding-steams-game-growth-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="analysis---understanding-steams-game-growth-pattern">analysis - Understanding Steam’s Game Growth Pattern</h2>
 <p>The extremely high R² value (0.9969) for the cubic model reveals an important insight about Steam’s platform expansion. This remarkably close fit suggests we’ve uncovered the underlying algorithm that determines how many games Steam is willing to host each year. Rather than representing organic, unpredictable market growth, the cubic pattern indicates a deliberate and systematic approach to platform scaling.</p>
 <p>The cubic function (with its third-degree polynomial) appears to be the mathematical formula driving Steam’s internal capacity planning. This explains why the R² value approaches perfect correlation - we’re not simply modeling market behavior, but reverse-engineering Steam’s own expansion algorithm. The exceptionally low MSE value (1,716,218.26) further confirms that this cubic function represents the actual decision-making process behind Steam’s game catalog growth.</p>
 <p>This discovery has significant implications for developers and publishers, as it suggests Steam’s growth follows a predictable mathematical pattern rather than responding dynamically to market forces or quality considerations.</p>
 </section>
 </section>
 <section id="are-older-game-blocking-people-from-trying-new-games" class="level1">
-<h1>Are older Game blocking people from trying new games?</h1>
+<h1>2 Are older Game blocking people from trying new games?</h1>
+<p>With the following graphs I am attempting to describe if people are biased enough toward newer games to support new releases.</p>
+<p>Looking at the Steam games distribution, <strong>older games with fewer reviews tend to fade into obscurity</strong> while <strong>newer releases consistently attract player attention regardless of size</strong>. Although technically competing with established giants, <strong>the market remains receptive to new entries</strong> as shown by the varied review counts across recent years, demonstrating that <strong>players still give new games a fair chance</strong> despite the crowded marketplace.</p>
 <div id="cell-11" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
@@ -487,14 +459,10 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 </div>
 </div>
 </div>
+<p><em>ignore the Bar graph</em></p>
 <section id="support-vector-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="support-vector-classifier">Support Vector Classifier</h2>
-<ol type="1">
-<li>Is The Market as “Entrenched” as People Claim?</li>
-</ol>
-<p>With the following graphs I am attempting to describe if people are biased enough toward newer games to support new releases.</p>
-<p>Looking at the Steam games distribution, <strong>older games with fewer reviews tend to fade into obscurity</strong> while <strong>newer releases consistently attract player attention regardless of size</strong>. Although technically competing with established giants, <strong>the market remains receptive to new entries</strong> as shown by the varied review counts across recent years, demonstrating that <strong>players still give new games a fair chance</strong> despite the crowded marketplace.</p>
-<div id="cell-14" class="cell" data-execution_count="27">
+<div id="cell-15" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -510,7 +478,7 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-15" class="cell" data-execution_count="6">
+<div id="cell-16" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -534,7 +502,7 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <section id="svc-graph-explination" class="level3">
 <h3 class="anchored" data-anchor-id="svc-graph-explination">SVC graph explination</h3>
 <p>Looking at the Steam games distribution, older games with fewer reviews tend to fade into obscurity while newer releases consistently attract player attention regardless of size. Although technically competing with established giants, the market remains receptive to new entries as shown by the varied review counts across recent years, demonstrating that players still give new games a fair chance despite the crowded marketplace.</p>
-<div id="cell-17" class="cell" data-execution_count="10">
+<div id="cell-18" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -563,7 +531,7 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <section id="multi-svc" class="level3">
 <h3 class="anchored" data-anchor-id="multi-svc">Multi SVC</h3>
 <p>This chart uses SVM decision boundaries to illustrate how recent review activity varies across Steam games over time. The purple boundary (1000+ recent reviews) demonstrates that mega hits maintain significant player engagement years after release, with some titles from as far back as 2012 still generating substantial activity. The red and green boundaries (100+ and 10+ recent reviews) show more modest but still notable engagement patterns. The visualization confirms that established blockbusters dominate player attention long-term, creating persistent competitive pressure from legacy titles. However, the substantial presence of games within the middle boundaries indicates moderate success remains achievable, suggesting the market, while challenging, isn’t completely closed to newer entrants despite the enduring influence of major hits.</p>
-<div id="cell-19" class="cell">
+<div id="cell-20" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -595,7 +563,7 @@ Best cross-validation F1 score: 0.7833</code></pre>
 <section id="market-volume-proxy-explanation" class="level3">
 <h3 class="anchored" data-anchor-id="market-volume-proxy-explanation">Market Volume Proxy Explanation</h3>
 <p>The “Recent Activity Value” metric (Recent Reviews × Price) serves as a proxy for a game’s current market performance. This calculation estimates commercial activity by multiplying the number of recent reviews by the game’s price, providing an approximate revenue indicator. Since Steam reviews typically represent a small percentage of actual purchases (estimated at 1-5%), this value offers a relative measure of current commercial performance without requiring access to private sales data. This proxy helps identify which games maintain active communities and revenue generation long after release versus those that experience rapid decline in player engagement.</p>
-<div id="cell-21" class="cell" data-execution_count="5">
+<div id="cell-22" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -619,12 +587,12 @@ Best cross-validation F1 score: 0.7833</code></pre>
 </div>
 </section>
 </section>
-<section id="recent-activity-value-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="recent-activity-value-analysis">Recent Activity Value Analysis</h2>
+<section id="analysis---recent-activity-value" class="level2">
+<h2 class="anchored" data-anchor-id="analysis---recent-activity-value">analysis - Recent Activity Value</h2>
 <p>This scatter plot displays Steam games by release date (y-axis) and recent activity value (x-axis), with dot size indicating review count and color showing total review count on a logarithmic scale.</p>
 <p>The vast majority of Steam games (82,931 or 92.5%) have no recent reviews. Among games with activity, most (5,097 games) have only 10-99 recent reviews, while just 233 games (0.3%) exceed 1000+ recent reviews. The highest activity value recorded is $2,349,028.</p>
 <p>The visualization reveals a clear boundary line forming the right edge of the distribution, suggesting a natural limit to how much value a game can generate at each review tier. Games from 2014-present dominate the visual space, with older successful titles appearing as isolated points. Higher-value games (right side) typically maintain their position over time, showing stability in the highest earning segments.</p>
-<div id="cell-23" class="cell" data-execution_count="6">
+<div id="cell-24" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -643,14 +611,14 @@ Best cross-validation F1 score: 0.7833</code></pre>
 </div>
 </div>
 </section>
-<section id="volume-density-visualizations-1" class="level2">
-<h2 class="anchored" data-anchor-id="volume-density-visualizations-1">Volume Density Visualizations</h2>
+<section id="analysis---market-volume-density-kde" class="level2">
+<h2 class="anchored" data-anchor-id="analysis---market-volume-density-kde">analysis - Market Volume Density KDE</h2>
 <p>This KDE plot shows Steam game distribution by release date and market volume (recent reviews × price). The red hotspot reveals most games cluster in recent years with low market volumes. Steam’s growth exploded after 2012, with dramatic density increases post-2016. With 5,258 active games versus 84,360 inactive ones, the marketplace shows extreme inequality - the median game earns just $479.76 in recent market volume, while the top performer reaches $2.3+ million. A striking 90% of games generate less than $6,568.65, demonstrating digital distribution’s winner-take-all reality.</p>
 </section>
 </section>
 <section id="what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="level1">
-<h1>What are “factors” are most impactiful for getting new players to join?</h1>
-<div id="cell-26" class="cell" data-execution_count="7">
+<h1>3 What are “factors” are most impactiful for getting new players to join?</h1>
+<div id="cell-27" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -699,17 +667,17 @@ Most successful price points:
 </div>
 </div>
 </div>
-<section id="pca---discussion" class="level2">
-<h2 class="anchored" data-anchor-id="pca---discussion">PCA - Discussion</h2>
+<section id="analysis---pca" class="level2">
+<h2 class="anchored" data-anchor-id="analysis---pca">analysis - PCA</h2>
 <p>The PCA implementation reveals critical insights about feature effectiveness across different competitor thresholds. For the initial 10+ recent reviews threshold, <strong>simply having any reviews at all proved to be a dominant predictor</strong>, as games rarely fall into the 1-9 reviews range. This makes competitor detection at this threshold relatively straightforward. However, when shifting to the more challenging 100+ reviews threshold, <strong>the prediction task becomes substantially more difficult and less trivial</strong>. The PCA confirms that features highly effective for the 10+ threshold lose much of their predictive power at higher thresholds, requiring more sophisticated feature combinations. This explains the selection of these particular features for the model, as they offered the best performance for discriminating between truly competitive games (100+ recent reviews) rather than simply detecting minimal market presence. The PCA dimensionality reduction clearly illustrates this complexity shift between threshold levels.</p>
 </section>
 </section>
 <section id="market-competitiveness-prediction-through-indirect-predictors" class="level1">
-<h1>Market Competitiveness Prediction Through Indirect Predictors</h1>
+<h1>4 Market Competitiveness Prediction Through Indirect Predictors</h1>
 <p>The data demonstrates the feasibility of predicting market competitors through indirect metrics using Random Forest modeling. Defining market competitors as games with 100+ recent reviews (representing only 1.8% of the total marketplace), the analysis achieved impressive performance metrics (accuracy: 0.992, precision: 0.863, recall: 0.658, F1 score: 0.747) through 5-fold cross-validation. The model effectively identifies commercially successful titles despite the extreme class imbalance in the dataset. Feature importance analysis reveals that recent positive review percentage (0.3560) is the dominant predictor of competitive status, significantly outweighing traditional volume metrics. Other influential factors include peak concurrent users (0.2017), positive review count (0.1498), negative review count (0.1187), and total positive review percentage (0.0533). This suggests that player sentiment and engagement quality are substantially more predictive of marketplace success than raw engagement volume, challenging conventional metrics focused primarily on total sales or downloads. The model’s strength in precision over recall indicates it’s more conservative in predicting competitive status, minimizing false positives while accepting some false negatives—a valuable characteristic for developers seeking to realistically assess their competitive positioning.</p>
 <section id="rf-experiment" class="level2">
 <h2 class="anchored" data-anchor-id="rf-experiment">RF experiment</h2>
-<div id="cell-28" class="cell" data-execution_count="16">
+<div id="cell-29" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -835,12 +803,12 @@ Top 5 features for predicting market competitors:
 </div>
 </div>
 </div>
-<section id="misclassification-heatmap-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="misclassification-heatmap-analysis">Misclassification Heatmap Analysis</h3>
+<section id="analysis---misclassification-heatmap" class="level3">
+<h3 class="anchored" data-anchor-id="analysis---misclassification-heatmap">analysis - Misclassification Heatmap</h3>
 <p>The misclassification heatmap exposes the model’s key performance characteristics in predicting market competitors. <strong>The model excels at correctly identifying smaller games that aren’t competitors</strong>, effectively filtering out titles with minimal market presence. However, <strong>it significantly underperforms when evaluating older games with substantial review counts</strong>. This failure manifests as a cluster of false negatives—games that are actually market competitors but predicted as non-competitors. The visualization clearly demonstrates that while total review count and release date work well for newer titles, <strong>these features alone cannot accurately determine whether an established game maintains current commercial viability</strong>. The model essentially fails to distinguish between “has-been” titles and those that continue generating significant revenue years after release. To improve prediction accuracy, features that better capture recent engagement patterns and current market momentum beyond simple review tallies are needed.</p>
 </section>
-<section id="cross-validation-summary" class="level3">
-<h3 class="anchored" data-anchor-id="cross-validation-summary">Cross-Validation Summary</h3>
+<section id="analysis---cross-validation-summary" class="level3">
+<h3 class="anchored" data-anchor-id="analysis---cross-validation-summary">analysis - Cross-Validation Summary</h3>
 <p>The cross-validation implementation used stratified k-fold validation to address class imbalance and provide reliable performance metrics. <strong>Precision consistently exceeded recall</strong>, indicating the Random Forest classifier is more conservative in labeling games as competitors. The code identified <strong>systematic misclassification patterns</strong> that persisted across validation folds, particularly with older titles having high total reviews but lower recent engagement. These consistent errors across folds suggest limitations in the feature set rather than algorithmic problems. The validation process quantified both the model’s strengths in filtering small games and its weaknesses in evaluating established titles.</p>
 </section>
 </section>
