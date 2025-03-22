@@ -122,7 +122,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join" id="toc-what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join">3 What are “factors” are most impactiful for getting new players to join?</a>
   <ul class="collapse">
-  <li><a href="#analysis---pca" id="toc-analysis---pca" class="nav-link" data-scroll-target="#analysis---pca">analysis - PCA</a></li>
+  <li><a href="#analysis---pca-factors-impacting-new-player-acquisition" id="toc-analysis---pca-factors-impacting-new-player-acquisition" class="nav-link" data-scroll-target="#analysis---pca-factors-impacting-new-player-acquisition">Analysis - PCA: Factors Impacting New Player Acquisition</a></li>
   </ul></li>
   <li><a href="#market-competitiveness-prediction-through-indirect-predictors" id="toc-market-competitiveness-prediction-through-indirect-predictors" class="nav-link" data-scroll-target="#market-competitiveness-prediction-through-indirect-predictors">4 Market Competitiveness Prediction Through Indirect Predictors</a>
   <ul class="collapse">
@@ -618,46 +618,50 @@ Best cross-validation F1 score: 0.7833</code></pre>
 </section>
 <section id="what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="level1">
 <h1>3 What are “factors” are most impactiful for getting new players to join?</h1>
-<div id="cell-27" class="cell" data-execution_count="7">
+<div id="cell-27" class="cell" data-execution_count="19">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(cs670.qh)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> cs670.qh.analyze_steam_market_competitors(df)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(cs670.qh)</span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># View results</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Found </span><span class="sc">{</span>analysis[<span class="st">'stats'</span>][<span class="st">'competitors'</span>]<span class="sc">}</span><span class="ss"> market competitors (</span><span class="sc">{</span>analysis[<span class="st">'stats'</span>][<span class="st">'competitor_pct'</span>]<span class="sc">:.2f}</span><span class="ss">%)"</span>)</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Top features correlated with success:"</span>)</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(analysis[<span class="st">'correlations'</span>].head(<span class="dv">5</span>))</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Best price points</span></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Most successful price points:"</span>)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(analysis[<span class="st">'recommendations'</span>][<span class="st">'price_points'</span>][[<span class="st">'Price_Band'</span>, <span class="st">'Success_Rate'</span>]].head(<span class="dv">3</span>))</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Show cluster visualization</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">'figures'</span> <span class="kw">in</span> analysis <span class="kw">and</span> <span class="st">'clusters'</span> <span class="kw">in</span> analysis[<span class="st">'figures'</span>]:</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    analysis[<span class="st">'figures'</span>][<span class="st">'clusters'</span>].show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Data preprocessing</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'release_date'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'release_date'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.dropna(subset<span class="op">=</span>[<span class="st">'release_date'</span>])</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter out games with no reviews or missing review percentages</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[<span class="op">~</span>df[<span class="st">'num_reviews_total'</span>].isna() <span class="op">&amp;</span> (df[<span class="st">'num_reviews_total'</span>] <span class="op">&gt;</span> <span class="dv">10</span>) <span class="op">&amp;</span> (df[<span class="st">'num_reviews_total'</span>] <span class="op">!=</span> <span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[<span class="op">~</span>df[<span class="st">'pct_pos_total'</span>].isna()]  <span class="co"># Ensure we have review percentage data</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate estimated revenue metrics as in your original code</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'min_price'</span>] <span class="op">=</span> df[<span class="st">'price'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="bu">max</span>(x, <span class="fl">0.99</span>) <span class="cf">if</span> x <span class="op">&gt;=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="fl">0.99</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'revenue'</span>] <span class="op">=</span> df[<span class="st">'num_reviews_total'</span>] <span class="op">*</span> df[<span class="st">'min_price'</span>]</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'log_revenue'</span>] <span class="op">=</span> np.log(df[<span class="st">'revenue'</span>].clip(<span class="dv">1</span>, <span class="va">None</span>))  <span class="co"># Natural log transform</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract release year as a feature</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'release_year'</span>] <span class="op">=</span> df[<span class="st">'release_date'</span>].dt.year</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>numeric_features <span class="op">=</span> [</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price'</span>, <span class="st">'dlc_count'</span>, <span class="st">'metacritic_score'</span>, <span class="st">'achievements'</span>,</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">'recommendations'</span>, <span class="st">'user_score'</span>, <span class="st">'score_rank'</span>, <span class="st">'positive'</span>, </span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    <span class="st">'negative'</span>, <span class="st">'average_playtime_forever'</span>, <span class="st">'median_playtime_forever'</span>,</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="st">'peak_ccu'</span>, <span class="st">'pct_pos_total'</span>, <span class="st">'num_reviews_total'</span>,</span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">'pct_pos_recent'</span>, <span class="st">'num_reviews_recent'</span>, <span class="st">'log_revenue'</span>, <span class="st">'release_year'</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> cs670.qh.perform_pca_analysis(df, numeric_features, target_col<span class="op">=</span><span class="st">'pct_pos_total'</span>)</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="co"># To save: fig.savefig('pca_analysis.png', dpi=300, bbox_inches='tight')</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Found 6322 market competitors (7.05%)
+<pre><code>Number of components: 8
+Total variance explained: 83.04%
 
-Top features correlated with success:
-             Feature  Correlation
-13    pct_pos_recent     0.955093
-4   metacritic_score     0.290756
-12     pct_pos_total     0.261600
-24      movies_count     0.183597
-1       required_age     0.174430
-
-Most successful price points:
-      Price_Band  Success_Rate
-8  $50.00-$59.99     55.514706
-7  $40.00-$49.99     39.423077
-6  $30.00-$39.99     39.420655</code></pre>
+Top features for PC1: num_reviews_total, positive, recommendations
+Top features for PC2: log_revenue, pct_pos_recent, price</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -667,9 +671,12 @@ Most successful price points:
 </div>
 </div>
 </div>
-<section id="analysis---pca" class="level2">
-<h2 class="anchored" data-anchor-id="analysis---pca">analysis - PCA</h2>
-<p>The PCA implementation reveals critical insights about feature effectiveness across different competitor thresholds. For the initial 10+ recent reviews threshold, <strong>simply having any reviews at all proved to be a dominant predictor</strong>, as games rarely fall into the 1-9 reviews range. This makes competitor detection at this threshold relatively straightforward. However, when shifting to the more challenging 100+ reviews threshold, <strong>the prediction task becomes substantially more difficult and less trivial</strong>. The PCA confirms that features highly effective for the 10+ threshold lose much of their predictive power at higher thresholds, requiring more sophisticated feature combinations. This explains the selection of these particular features for the model, as they offered the best performance for discriminating between truly competitive games (100+ recent reviews) rather than simply detecting minimal market presence. The PCA dimensionality reduction clearly illustrates this complexity shift between threshold levels.</p>
+<section id="analysis---pca-factors-impacting-new-player-acquisition" class="level2">
+<h2 class="anchored" data-anchor-id="analysis---pca-factors-impacting-new-player-acquisition">Analysis - PCA: Factors Impacting New Player Acquisition</h2>
+<p>The PCA visualization reveals important patterns in Steam game performance metrics that help answer what factors most impact new player acquisition. For PC2, <strong>log_revenue shows a surprisingly strong positive contribution (0.59)</strong>, with price (0.44), pct_pos_recent (0.46), and metacritic_score (0.40) also exhibiting significant loadings. What’s particularly noteworthy is that <strong>price plays a more influential role than raw review counts</strong> in driving revenue variance. This suggests that for attracting new players, competitive pricing strategies alongside strong critical reception are more decisive factors than simply having a large existing player base.</p>
+<p>Interestingly, this pattern may also reflect different player behaviors: users appear more likely to play games they already own (especially older titles) based on positive review scores, but their purchasing decisions for new games are more heavily influenced by both price and critical reception. It’s worth noting that the revenue proxy used in this analysis (price × number of reviews) can be somewhat distorted by free-to-play games in the dataset, which operate on fundamentally different acquisition models.</p>
+<p>As a side note, there’s not enough information to draw definitive conclusions, but this pattern might also be capturing another common player behavior: purchasing games during sales with no immediate intention of playing them. This “backlog effect” could explain some of the disconnect between price sensitivity and actual engagement metrics, but would require additional data to confirm.</p>
+<p>For developers looking to attract new players, this PCA suggests a multi-faceted approach: strategic pricing appropriate to the game’s quality tier, focusing on generating positive critical reception and recent reviews. The analysis demonstrates that new player acquisition isn’t driven by a single dominant factor but rather by the careful orchestration of pricing, quality, and visibility metrics working in concert.</p>
 </section>
 </section>
 <section id="market-competitiveness-prediction-through-indirect-predictors" class="level1">
@@ -810,6 +817,7 @@ Top 5 features for predicting market competitors:
 <section id="analysis---cross-validation-summary" class="level3">
 <h3 class="anchored" data-anchor-id="analysis---cross-validation-summary">analysis - Cross-Validation Summary</h3>
 <p>The cross-validation implementation used stratified k-fold validation to address class imbalance and provide reliable performance metrics. <strong>Precision consistently exceeded recall</strong>, indicating the Random Forest classifier is more conservative in labeling games as competitors. The code identified <strong>systematic misclassification patterns</strong> that persisted across validation folds, particularly with older titles having high total reviews but lower recent engagement. These consistent errors across folds suggest limitations in the feature set rather than algorithmic problems. The validation process quantified both the model’s strengths in filtering small games and its weaknesses in evaluating established titles.</p>
+<p>I’ll revamp the image section to account for the new information from our PCA analysis:</p>
 </section>
 </section>
 </section>
@@ -822,11 +830,12 @@ Top 5 features for predicting market competitors:
 </section>
 <section id="critical-success-factors" class="level2">
 <h2 class="anchored" data-anchor-id="critical-success-factors">Critical Success Factors</h2>
-<p>The most significant finding concerns the primary driver of commercial longevity. The feature importance analysis identified <strong>recent positive review percentage (0.3560) as significantly more predictive of market competitiveness than any volume-based metric</strong>. This suggests that <strong>player rapport—the meaningful connection between developers and their audience—represents the critical factor in sustained commercial viability</strong>. Even massive legacy titles eventually fade without maintaining this player relationship.</p>
+<p>The PCA visualization reveals that for attracting new players, <strong>price (0.44) and recent positive reviews (0.46) show stronger contributions</strong> than raw review volume metrics. This suggests that strategic pricing alongside quality reception—rather than market dominance—drives new player acquisition. The feature importance analysis further supports this, identifying <strong>recent positive review percentage (0.3560) as significantly more predictive of market competitiveness than any volume-based metric</strong>.</p>
+<p>Interestingly, the PCA suggests different player behaviors influence market dynamics: users appear more likely to play games they already own based on positive reviews, but their purchasing decisions for new games are more heavily influenced by price and critical reception. While not conclusive, this pattern might also reflect the common “backlog effect”—players purchasing discounted games without immediate intention to play them.</p>
 </section>
 <section id="strategic-implications-for-developers" class="level2">
 <h2 class="anchored" data-anchor-id="strategic-implications-for-developers">Strategic Implications for Developers</h2>
-<p>For developers concerned about market saturation, the research suggests <strong>a strategic focus on quality and player engagement rather than attempting to compete directly with established titles</strong>. The data demonstrates that <strong>players continually seek and support new experiences</strong> despite having access to successful legacy content. The <strong>12.4% of games achieving at least moderate success</strong> (10+ recent reviews) indicates substantial market receptivity to new offerings that resonate with player expectations.</p>
+<p>For developers concerned about market saturation, the research suggests <strong>a strategic focus on quality, appropriate pricing, and player engagement rather than attempting to compete directly with established titles</strong>. The data demonstrates that <strong>players continually seek and support new experiences</strong> despite having access to successful legacy content. The <strong>12.4% of games achieving at least moderate success</strong> (10+ recent reviews) indicates substantial market receptivity to new offerings that resonate with player expectations.</p>
 <p>This evolving ecosystem with natural competitive decay represents a more accessible marketplace than commonly perceived. While competition from established titles creates genuine challenges, <strong>the data conclusively shows that quality new entries continue finding viable audiences</strong>, and even the most successful legacy games eventually yield market space as their player engagement naturally diminishes over time.</p>
 </section>
 </section>

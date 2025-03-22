@@ -5136,3 +5136,154 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
     print(summary)
     
     return results
+
+def perform_pca_analysis(df, features, target_col=None, n_components=None):
+    """
+    Perform PCA analysis on the given dataframe and return visualizations.
+    
+    Parameters:
+    -----------
+    df : pandas.DataFrame
+        The input dataframe containing the data
+    features : list
+        List of feature column names to use for PCA
+    target_col : str, optional
+        Column to use for coloring the scatter plot points
+    n_components : int, optional
+        Number of components to use. If None, will use enough to explain 80% variance
+        
+    Returns:
+    --------
+    fig : matplotlib.figure.Figure
+        Figure object containing both plots (can be saved or displayed)
+    """
+    import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    from sklearn.preprocessing import StandardScaler
+    from sklearn.decomposition import PCA
+    from matplotlib.gridspec import GridSpec
+    
+    # Create a figure to hold both plots
+    fig = plt.figure(figsize=(16, 10))
+    gs = GridSpec(1, 2, width_ratios=[1, 1])
+    
+    # Create a copy of the dataframe with only the selected features
+    X = df[features].copy()
+    
+    # Handle missing values
+    X = X.fillna(X.median())
+    
+    # Standardize the data
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    # Determine optimal number of components if not specified
+    if n_components is None:
+        pca_full = PCA()
+        pca_full.fit(X_scaled)
+        n_components = np.argmax(np.cumsum(pca_full.explained_variance_ratio_) >= 0.8) + 1
+    
+    # Perform PCA with the selected number of components
+    pca = PCA(n_components=n_components)
+    principal_components = pca.fit_transform(X_scaled)
+    
+    # Create a DataFrame with principal components
+    pca_df = pd.DataFrame(
+        data=principal_components,
+        columns=[f'PC{i+1}' for i in range(n_components)]
+    )
+    
+    # Add target column if provided
+    if target_col is not None and target_col in df.columns:
+        pca_df['target'] = df[target_col].values
+    
+    # Feature loadings
+    loadings = pd.DataFrame(
+        pca.components_.T,
+        columns=[f'PC{i+1}' for i in range(n_components)],
+        index=features
+    )
+    
+    # Get top contributing features
+    loadings_pc1 = loadings.iloc[:, 0].abs().sort_values(ascending=False)
+    loadings_pc2 = loadings.iloc[:, 1].abs().sort_values(ascending=False)
+    top_features = list(set(loadings_pc1.index[:5]).union(set(loadings_pc2.index[:5])))
+    
+    # Plot 1: Scatter plot of first two principal components
+    ax1 = plt.subplot(gs[0])
+    if target_col is not None and target_col in df.columns:
+        scatter = ax1.scatter(
+            pca_df['PC1'], 
+            pca_df['PC2'],
+            c=df[target_col],
+            cmap='viridis',
+            alpha=0.5,
+            s=50
+        )
+        plt.colorbar(scatter, ax=ax1, label=target_col)
+    else:
+        ax1.scatter(
+            pca_df['PC1'], 
+            pca_df['PC2'],
+            alpha=0.5,
+            s=50
+        )
+    
+    # Add feature loading vectors
+    scale_factor = 5
+    for feature in top_features:
+        i = features.index(feature)
+        ax1.arrow(
+            0, 0,
+            loadings.iloc[i, 0] * scale_factor,
+            loadings.iloc[i, 1] * scale_factor,
+            head_width=0.2,
+            head_length=0.2,
+            fc='red',
+            ec='red',
+            alpha=0.6
+        )
+        ax1.text(
+            loadings.iloc[i, 0] * scale_factor * 1.1,
+            loadings.iloc[i, 1] * scale_factor * 1.1,
+            feature,
+            color='black',
+            ha='center',
+            va='center',
+            fontweight='bold',
+            bbox=dict(facecolor='white', alpha=0.8)
+        )
+    
+    ax1.set_xlabel(f'PC1 ({pca.explained_variance_ratio_[0]:.2%})')
+    ax1.set_ylabel(f'PC2 ({pca.explained_variance_ratio_[1]:.2%})')
+    ax1.set_title('PCA: First Two Principal Components')
+    ax1.grid(True, alpha=0.3)
+    
+    # Plot 2: Heatmap of feature loadings
+    ax2 = plt.subplot(gs[1])
+    sns.heatmap(
+        loadings.iloc[:, :min(5, n_components)], 
+        annot=True, 
+        cmap='coolwarm', 
+        fmt='.2f', 
+        linewidths=0.5,
+        ax=ax2
+    )
+    ax2.set_title('Feature Contributions to Principal Components')
+    
+    plt.tight_layout()
+    
+    # Print minimal summary
+    print(f"Number of components: {n_components}")
+    print(f"Total variance explained: {sum(pca.explained_variance_ratio_)*100:.2f}%")
+    print("\nTop features for PC1:", ", ".join(loadings_pc1.index[:3]))
+    print("Top features for PC2:", ", ".join(loadings_pc2.index[:3]))
+    
+    return fig
+
+# Example usage:
+# numeric_features = ['price', 'dlc_count', 'metacritic_score', ...]
+# fig = perform_pca_analysis(df, numeric_features, target_col='pct_pos_total')
+# plt.show()
