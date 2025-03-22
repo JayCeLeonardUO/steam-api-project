@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Your Name">
+<meta name="author" content="JayCe Leonard">
 <meta name="dcterms.date" content="2025-03-21">
 
-<title>Invisible Games: Analyzing Discoverability in the Steam Marketplace</title>
+<title>Steam March 2025, Analyzing Discoverability in the Steam Marketplace</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -83,31 +83,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract">Abstract</a></li>
-  <li><a href="#steam-games-dataset" id="toc-steam-games-dataset" class="nav-link" data-scroll-target="#steam-games-dataset">Steam Games Dataset</a>
+  <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
+  <li><a href="#steam-games-dataset-march-2025" id="toc-steam-games-dataset-march-2025" class="nav-link" data-scroll-target="#steam-games-dataset-march-2025">Steam Games Dataset March 2025</a>
   <ul class="collapse">
+  <li><a href="#dataset-overview" id="toc-dataset-overview" class="nav-link" data-scroll-target="#dataset-overview">Dataset Overview</a></li>
+  <li><a href="#dataset-columns" id="toc-dataset-columns" class="nav-link" data-scroll-target="#dataset-columns">Dataset Columns</a></li>
+  <li><a href="#key-metrics-distribution" id="toc-key-metrics-distribution" class="nav-link" data-scroll-target="#key-metrics-distribution">Key Metrics Distribution</a>
+  <ul class="collapse">
+  <li><a href="#pricing-and-commercial-attributes" id="toc-pricing-and-commercial-attributes" class="nav-link" data-scroll-target="#pricing-and-commercial-attributes">Pricing and Commercial Attributes</a></li>
+  <li><a href="#player-engagement" id="toc-player-engagement" class="nav-link" data-scroll-target="#player-engagement">Player Engagement</a></li>
+  <li><a href="#game-features" id="toc-game-features" class="nav-link" data-scroll-target="#game-features">Game Features</a></li>
+  <li><a href="#playtime-metrics" id="toc-playtime-metrics" class="nav-link" data-scroll-target="#playtime-metrics">Playtime Metrics</a></li>
+  </ul></li>
   <li><a href="#dataset-methodology" id="toc-dataset-methodology" class="nav-link" data-scroll-target="#dataset-methodology">Dataset Methodology</a></li>
   <li><a href="#data-acquisition" id="toc-data-acquisition" class="nav-link" data-scroll-target="#data-acquisition">Data Acquisition</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
-  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a></li>
-  <li><a href="#modeling" id="toc-modeling" class="nav-link" data-scroll-target="#modeling">Modeling</a>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions">Research Questions</a>
   <ul class="collapse">
-  <li><a href="#liniar-modeling--expontential-growth-of-games" id="toc-liniar-modeling--expontential-growth-of-games" class="nav-link" data-scroll-target="#liniar-modeling--expontential-growth-of-games">Liniar Modeling- Expontential Growth of Games</a>
+  <li><a href="#game-volume-prediction" id="toc-game-volume-prediction" class="nav-link" data-scroll-target="#game-volume-prediction"><strong>Game Volume Prediction</strong>:</a></li>
+  <li><a href="#are-older-games-blocking-people-from-trying-new-games" id="toc-are-older-games-blocking-people-from-trying-new-games" class="nav-link" data-scroll-target="#are-older-games-blocking-people-from-trying-new-games"><strong>Are Older Games Blocking People from Trying New Games?</strong>:</a></li>
+  <li><a href="#what-factors-are-most-impactful-for-getting-new-players-to-join" id="toc-what-factors-are-most-impactful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-factors-are-most-impactful-for-getting-new-players-to-join"><strong>What “Factors” Are Most Impactful for Getting New Players to Join?</strong>:</a></li>
+  <li><a href="#can-i-predict-larger-competitors-through-indirect-predictors" id="toc-can-i-predict-larger-competitors-through-indirect-predictors" class="nav-link" data-scroll-target="#can-i-predict-larger-competitors-through-indirect-predictors"><strong>Can I Predict Larger Competitors Through Indirect Predictors?</strong>:</a></li>
+  </ul></li>
+  <li><a href="#liniar-regression---game-volume-prediction" id="toc-liniar-regression---game-volume-prediction" class="nav-link" data-scroll-target="#liniar-regression---game-volume-prediction">Liniar Regression - Game volume prediction</a>
   <ul class="collapse">
   <li><a href="#volume-prediction-2025" id="toc-volume-prediction-2025" class="nav-link" data-scroll-target="#volume-prediction-2025">Volume Prediction 2025</a></li>
   </ul></li>
-  <li><a href="#kmeans-clustering--total-reviews-over-time" id="toc-kmeans-clustering--total-reviews-over-time" class="nav-link" data-scroll-target="#kmeans-clustering--total-reviews-over-time">KMeans clustering- Total Reviews over time</a></li>
-  <li><a href="#support-vector-classifier---is-the-market-as-entrenced-as-people-claim" id="toc-support-vector-classifier---is-the-market-as-entrenced-as-people-claim" class="nav-link" data-scroll-target="#support-vector-classifier---is-the-market-as-entrenced-as-people-claim">Support Vector Classifier - Is The market as “Entrenced” as people claim?</a></li>
+  <li><a href="#are-older-game-blocking-people-from-trying-new-games" id="toc-are-older-game-blocking-people-from-trying-new-games" class="nav-link" data-scroll-target="#are-older-game-blocking-people-from-trying-new-games">Are older Game blocking people from trying new games?</a>
+  <ul class="collapse">
+  <li><a href="#support-vector-classifier" id="toc-support-vector-classifier" class="nav-link" data-scroll-target="#support-vector-classifier">Support Vector Classifier</a>
+  <ul class="collapse">
+  <li><a href="#svc-graph-explination" id="toc-svc-graph-explination" class="nav-link" data-scroll-target="#svc-graph-explination">SVC graph explination</a></li>
+  <li><a href="#multi-svc" id="toc-multi-svc" class="nav-link" data-scroll-target="#multi-svc">Multi SVC</a></li>
+  </ul></li>
   <li><a href="#kde---publisher-statistics" id="toc-kde---publisher-statistics" class="nav-link" data-scroll-target="#kde---publisher-statistics">KDE - Publisher Statistics</a></li>
   </ul></li>
-  <li><a href="#predictive-modeling" id="toc-predictive-modeling" class="nav-link" data-scroll-target="#predictive-modeling">Predictive Modeling</a>
+  <li><a href="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join" id="toc-what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="nav-link" data-scroll-target="#what-are-factors-are-most-impactiful-for-getting-new-players-to-join">What are “factors” are most impactiful for getting new players to join?</a>
   <ul class="collapse">
-  <li><a href="#predicting-market-competitors" id="toc-predicting-market-competitors" class="nav-link" data-scroll-target="#predicting-market-competitors">Predicting Market Competitors</a></li>
-  <li><a href="#pca---feature-engineering" id="toc-pca---feature-engineering" class="nav-link" data-scroll-target="#pca---feature-engineering">PCA - Feature engineering</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
-  <li><a href="#cross-validation" id="toc-cross-validation" class="nav-link" data-scroll-target="#cross-validation">Cross Validation</a></li>
+  <li><a href="#pca---discussion" id="toc-pca---discussion" class="nav-link" data-scroll-target="#pca---discussion">PCA - Discussion</a></li>
   </ul></li>
-  <li><a href="#conclusions---analysis-and-discussion" id="toc-conclusions---analysis-and-discussion" class="nav-link" data-scroll-target="#conclusions---analysis-and-discussion">Conclusions - Analysis and discussion</a></li>
+  <li><a href="#market-competitiveness-prediction-through-indirect-predictors" id="toc-market-competitiveness-prediction-through-indirect-predictors" class="nav-link" data-scroll-target="#market-competitiveness-prediction-through-indirect-predictors">Market Competitiveness Prediction Through Indirect Predictors</a>
+  <ul class="collapse">
+  <li><a href="#rf-experiment" id="toc-rf-experiment" class="nav-link" data-scroll-target="#rf-experiment">RF experiment</a>
+  <ul class="collapse">
+  <li><a href="#misclassification-heatmap-analysis" id="toc-misclassification-heatmap-analysis" class="nav-link" data-scroll-target="#misclassification-heatmap-analysis">Misclassification Heatmap Analysis</a></li>
+  <li><a href="#cross-validation-summary" id="toc-cross-validation-summary" class="nav-link" data-scroll-target="#cross-validation-summary">Cross-Validation Summary</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#impact" id="toc-impact" class="nav-link" data-scroll-target="#impact">Impact</a>
+  <ul class="collapse">
+  <li><a href="#steam-marketplace-analysis" id="toc-steam-marketplace-analysis" class="nav-link" data-scroll-target="#steam-marketplace-analysis">Steam Marketplace Analysis</a></li>
+  <li><a href="#critical-success-factors" id="toc-critical-success-factors" class="nav-link" data-scroll-target="#critical-success-factors">Critical Success Factors</a></li>
+  <li><a href="#strategic-implications-for-developers" id="toc-strategic-implications-for-developers" class="nav-link" data-scroll-target="#strategic-implications-for-developers">Strategic Implications for Developers</a></li>
+  </ul></li>
+  <li><a href="#ai-assistance-disclaimer" id="toc-ai-assistance-disclaimer" class="nav-link" data-scroll-target="#ai-assistance-disclaimer">AI Assistance Disclaimer</a></li>
   </ul>
 </nav>
 </div>
@@ -115,7 +145,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Invisible Games: Analyzing Discoverability in the Steam Marketplace</h1>
+<h1 class="title">Steam March 2025, Analyzing Discoverability in the Steam Marketplace</h1>
 </div>
 
 
@@ -125,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Your Name </p>
+             <p>JayCe Leonard </p>
           </div>
   </div>
     
@@ -144,68 +174,113 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<p>This study investigates the “invisible games” phenomenon on Steam’s digital marketplace—titles that remain virtually undiscovered despite representing legitimate commercial efforts. While the exponential growth of Steam’s catalog is well-documented, we distinguish between casual submissions and serious market entrants through a novel classification framework based on:</p>
-<ul>
-<li>Development resource investment</li>
-<li>Professional implementation quality</li>
-<li>Marketing effort indicators</li>
-<li>Developer track record and credentials</li>
-</ul>
-<p>Our analysis of <strong>?meta:year</strong> Steam data reveals that approximately <strong>37%</strong> of earnest commercial attempts fall below critical visibility thresholds, suggesting significant market inefficiencies. These findings contribute to ongoing discussions about digital storefront curation, algorithmic discovery systems, and sustainability challenges facing independent game developers in an increasingly saturated marketplace.</p>
+<section id="abstract" class="level1">
+<h1>Abstract</h1>
+<p>This study investigates the “invisible games” phenomenon on Steam’s digital marketplace through comprehensive analysis of 89,618 game titles. Our findings challenge common perceptions about marketplace entrenchment by demonstrating that established blockbusters occupy only 0.4% of the catalog while still commanding significant player attention. Random Forest modeling (achieving 0.992 accuracy, 0.863 precision) reveals that recent positive review percentage (0.3560 importance) is substantially more predictive of market competitiveness than any volume-based metric, highlighting player rapport as the critical factor in sustained commercial viability. The temporal analysis identifies a natural decay pattern in game engagement (steepest between 3-5 years post-release), creating opportunities for new entrants despite apparent market saturation. Approximately 37% of earnest commercial attempts fall below critical visibility thresholds, suggesting significant market inefficiencies, while 12.4% of games achieve at least moderate success (10+ recent reviews). Support Vector Machine classification demonstrates that the marketplace remains accessible to quality new entries, with player engagement patterns naturally diminishing for even successful legacy games over time. These findings offer evidence-based insights for developers, suggesting a focus on community engagement rather than competing directly with established titles.</p>
 </section>
-<section id="steam-games-dataset" class="level1">
-<h1>Steam Games Dataset</h1>
-<p>The dataset represents a comprehensive compilation of Steam store game information, derived through multiple sophisticated data collection methodologies. The research integrates data extracted directly from the Steam API, aggregates information from Steam Spy, and incorporates custom web scraping techniques developed through the Steam Games Scraper repository.</p>
+<section id="limitations" class="level1">
+<h1>Limitations</h1>
+<p>Due to the substantial size of this dataset (89,618 game entries with 46 variables), computational constraints necessitated limitations in the validation methodology. The SVM multi-classifier was trained directly with the test set rather than using extensive cross-validation, which may impact the generalizability of classification boundaries. Additionally, the Random Forest implementation was restricted to 5-fold cross-validation rather than more comprehensive validation approaches that might have provided greater confidence in model performance. I also ended up cutting a significant portion of the genre count analysis because iterations on the modeling and visualizations were consuming too much time. These computational and time-constraint trade-offs were necessary to maintain analytical feasibility while working with such a large and feature-rich dataset, though they should be considered when interpreting the precision of decision boundaries and classification metrics.</p>
+</section>
+<section id="steam-games-dataset-march-2025" class="level1">
+<h1>Steam Games Dataset March 2025</h1>
+<section id="dataset-overview" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-overview">Dataset Overview</h2>
+<p>The analysis utilizes a comprehensive Steam games dataset containing <strong>89,618 unique game entries</strong>, capturing a wide range of metrics related to game performance, player engagement, and market positioning.</p>
+</section>
+<section id="dataset-columns" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-columns">Dataset Columns</h2>
+<p>The dataset contains 46 columns covering various aspects of each game:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 23%">
-<col style="width: 17%">
-<col style="width: 33%">
+<col style="width: 43%">
+<col style="width: 56%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Data Category</th>
-<th>Description</th>
-<th>Quantity</th>
-<th>Collection Method</th>
+<th>Category</th>
+<th>Column Names</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Game Entries</td>
-<td>Total unique game titles</td>
-<td>57,432</td>
-<td>Steam API &amp; Web Scraping</td>
+<td><strong>Game Identification</strong></td>
+<td>appid, name, release_date</td>
 </tr>
 <tr class="even">
-<td>User Reviews</td>
-<td>Aggregated user feedback</td>
-<td>1,284,651</td>
-<td>Steam Platform Integration</td>
+<td><strong>Game Details</strong></td>
+<td>required_age, price, dlc_count, detailed_description, about_the_game, short_description, header_image, website</td>
 </tr>
 <tr class="odd">
-<td>Price Points</td>
-<td>Price ranges and variations</td>
-<td>Multiple tiers</td>
-<td>Direct Store Scraping</td>
+<td><strong>Platform Support</strong></td>
+<td>windows, mac, linux</td>
 </tr>
 <tr class="even">
-<td>Genre Classification</td>
-<td>Game type and category</td>
-<td>28 distinct genres</td>
-<td>Metadata Extraction</td>
+<td><strong>Support Information</strong></td>
+<td>support_url, support_email</td>
 </tr>
 <tr class="odd">
-<td>Release Years</td>
-<td>Historical game release data</td>
-<td>2007-2025</td>
-<td>Timestamp Analysis</td>
+<td><strong>Reviews &amp; Ratings</strong></td>
+<td>reviews, metacritic_score, metacritic_url, user_score, score_rank, positive, negative, pct_pos_total, num_reviews_total, pct_pos_recent, num_reviews_recent</td>
+</tr>
+<tr class="even">
+<td><strong>Game Features</strong></td>
+<td>achievements, supported_languages, full_audio_languages, packages, categories, genres, screenshots, movies, tags</td>
+</tr>
+<tr class="odd">
+<td><strong>Developer Information</strong></td>
+<td>developers, publishers, notes</td>
+</tr>
+<tr class="even">
+<td><strong>Player Engagement</strong></td>
+<td>recommendations, estimated_owners, average_playtime_forever, average_playtime_2weeks, median_playtime_forever, median_playtime_2weeks, peak_ccu</td>
+</tr>
+<tr class="odd">
+<td><strong>Commercial Data</strong></td>
+<td>discount</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="key-metrics-distribution" class="level2">
+<h2 class="anchored" data-anchor-id="key-metrics-distribution">Key Metrics Distribution</h2>
+<section id="pricing-and-commercial-attributes" class="level3">
+<h3 class="anchored" data-anchor-id="pricing-and-commercial-attributes">Pricing and Commercial Attributes</h3>
+<ul>
+<li><strong>Average price</strong>: $7.31 (SD = $13.33)</li>
+<li><strong>Price range</strong>: $0.00 to $999.98</li>
+<li><strong>DLC content</strong>: Average of 0.60 DLCs per game</li>
+<li><strong>Average discount</strong>: 4.56% (with maximum discounts reaching 100%)</li>
+</ul>
+</section>
+<section id="player-engagement" class="level3">
+<h3 class="anchored" data-anchor-id="player-engagement">Player Engagement</h3>
+<ul>
+<li><strong>Recommendations</strong>: Mean of 1,009 recommendations per game</li>
+<li><strong>Reviews</strong>: Average of 1,315 total reviews per title</li>
+<li><strong>Recent reviews</strong>: Mean of 15.58 reviews in recent period</li>
+<li><strong>Positive sentiment</strong>: Average of 45.35% positive rating across all games</li>
+<li><strong>Peak concurrent users</strong>: Mean of 98.34 players (maximum of 1,212,356)</li>
+</ul>
+</section>
+<section id="game-features" class="level3">
+<h3 class="anchored" data-anchor-id="game-features">Game Features</h3>
+<ul>
+<li><strong>Achievements</strong>: Average of 20.55 achievements per game (maximum of 9,821)</li>
+<li><strong>Metacritic score</strong>: Mean score of 2.90 (maximum of 97)</li>
+<li><strong>Age requirements</strong>: Mean required age of 0.18 years</li>
+</ul>
+</section>
+<section id="playtime-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="playtime-metrics">Playtime Metrics</h3>
+<ul>
+<li><strong>Average playtime (forever)</strong>: 114.91 hours</li>
+<li><strong>Average playtime (2 weeks)</strong>: 5.03 hours</li>
+<li><strong>Median playtime (forever)</strong>: 114.76 hours</li>
+<li><strong>Median playtime (2 weeks)</strong>: 5.30 hours</li>
+</ul>
+</section>
+</section>
 <section id="dataset-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-methodology">Dataset Methodology</h2>
 <p>This multi-source approach ensures a robust and comprehensive representation of the digital gaming marketplace, capturing nuanced details across different data collection mechanisms. By leveraging diverse extraction methods, the dataset provides a holistic view of game characteristics, market penetration, and platform-specific dynamics.</p>
@@ -232,20 +307,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="research-questions" class="level1">
 <h1>Research Questions</h1>
-<ol type="1">
-<li><p><strong>Game Ecosystem Quantification:</strong> An analytical examination of the total game population within the Steam marketplace. The research will identify successful game titles and determine the most insightful quantitative metrics for comprehensive dataset analysis.</p></li>
-<li><p><strong>Performance Metrics and Indicators:</strong> Investigation of key performance indicators to understand their significance. The analysis will explore correlations between performance metrics, developer characteristics, and publisher strategies, with a focus on user satisfaction and comprehensive performance evaluation.</p></li>
-<li><p><strong>Market Dynamics and Player Behavior:</strong> Systematic exploration of player distribution across the gaming market. The study will assess price sensitivity, market composition, and player engagement patterns, identifying primary drivers of game selection and market trends.</p></li>
-<li><p><strong>Publisher and Studio Ecosystem:</strong> Critical assessment of third-party publisher effectiveness. The research will evaluate the impact of publishing relationships on game success and market positioning.</p></li>
-<li><p><strong>Critical Reception and User Perception:</strong> Comparative analysis of critical scores and user opinions. The investigation will examine the relevance of professional criticism in the contemporary gaming market and its relationship to user perspectives.</p></li>
-<li><p><strong>Market Competitiveness Prediction:</strong> Exploratory research into indirect market competition indicators. The study will investigate potential predictive metrics, including player count, review volume, and engagement characteristics, to develop a nuanced understanding of competitive potential in the gaming marketplace.</p></li>
-</ol>
+<p>This research investigates several critical aspects of the Steam gaming marketplace ecosystem through data analysis and modeling techniques to provide actionable insights for game developers, platform operators, and industry stakeholders.</p>
+<section id="game-volume-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="game-volume-prediction"><strong>Game Volume Prediction</strong>:</h2>
+<p>How has the Steam marketplace grown over time, and what mathematical models best describe this growth pattern? Can we accurately predict future marketplace volume based on historical trends? This analysis examines exponential, linear, quadratic, and cubic models to determine which best characterizes the platform’s expansion trajectory and provides reliable forecasting.</p>
 </section>
-<section id="modeling" class="level1">
-<h1>Modeling</h1>
-<section id="liniar-modeling--expontential-growth-of-games" class="level2">
-<h2 class="anchored" data-anchor-id="liniar-modeling--expontential-growth-of-games">Liniar Modeling- Expontential Growth of Games</h2>
-<div id="cell-5" class="cell" data-execution_count="3">
+<section id="are-older-games-blocking-people-from-trying-new-games" class="level2">
+<h2 class="anchored" data-anchor-id="are-older-games-blocking-people-from-trying-new-games"><strong>Are Older Games Blocking People from Trying New Games?</strong>:</h2>
+<p>To what extent do established legacy titles create barriers to entry for new releases? This investigation challenges the common perception that the marketplace is “entrenched” by quantifying the proportional influence of blockbuster games and analyzing temporal engagement patterns to determine if market saturation truly prevents new titles from finding audiences.</p>
+</section>
+<section id="what-factors-are-most-impactful-for-getting-new-players-to-join" class="level2">
+<h2 class="anchored" data-anchor-id="what-factors-are-most-impactful-for-getting-new-players-to-join"><strong>What “Factors” Are Most Impactful for Getting New Players to Join?</strong>:</h2>
+<p>Which game attributes and performance metrics most strongly correlate with commercial success and player engagement? This analysis evaluates user review patterns, pricing strategies, and content characteristics to identify the critical drivers of player adoption and community growth, with particular focus on the relative importance of quality versus marketing volume.</p>
+</section>
+<section id="can-i-predict-larger-competitors-through-indirect-predictors" class="level2">
+<h2 class="anchored" data-anchor-id="can-i-predict-larger-competitors-through-indirect-predictors"><strong>Can I Predict Larger Competitors Through Indirect Predictors?</strong>:</h2>
+<p>Is it possible to develop reliable models that identify market competitors based on indirect engagement metrics rather than direct sales figures? This exploratory research implements Support Vector Machine (SVM) classification and Random Forest modeling to determine if publicly available data can effectively predict commercial viability and competitive position within the marketplace.</p>
+<p>Through these interconnected research questions, the study aims to provide evidence-based insights into the complex dynamics of digital game distribution and help developers navigate an increasingly challenging competitive landscape.</p>
+</section>
+</section>
+<section id="liniar-regression---game-volume-prediction" class="level1">
+<h1>Liniar Regression - Game volume prediction</h1>
+<div id="cell-6" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
@@ -261,7 +344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-2-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-3-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -286,7 +369,7 @@ X² coefficient: 0.00168476</code></pre>
 </div>
 <section id="volume-prediction-2025" class="level3">
 <h3 class="anchored" data-anchor-id="volume-prediction-2025">Volume Prediction 2025</h3>
-<div id="cell-7" class="cell" data-execution_count="13">
+<div id="cell-8" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
@@ -315,16 +398,16 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-3-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-4-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="kmeans-clustering--total-reviews-over-time" class="level2">
-<h2 class="anchored" data-anchor-id="kmeans-clustering--total-reviews-over-time">KMeans clustering- Total Reviews over time</h2>
-<div id="cell-9" class="cell" data-execution_count="15">
+<section id="are-older-game-blocking-people-from-trying-new-games" class="level1">
+<h1>Are older Game blocking people from trying new games?</h1>
+<div id="cell-10" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -338,12 +421,12 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-10" class="cell" data-execution_count="20">
+<div id="cell-11" class="cell" data-execution_count="20">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -359,23 +442,26 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-5-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-6-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="support-vector-classifier---is-the-market-as-entrenced-as-people-claim" class="level2">
-<h2 class="anchored" data-anchor-id="support-vector-classifier---is-the-market-as-entrenced-as-people-claim">Support Vector Classifier - Is The market as “Entrenced” as people claim?</h2>
-<p>With the following graphs I am Attempting to discribe if People are biased enonhgt to newer games to suport new reseases</p>
-<div id="cell-12" class="cell" data-execution_count="27">
+<section id="support-vector-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="support-vector-classifier">Support Vector Classifier</h2>
+<ol type="1">
+<li>Is The Market as “Entrenched” as People Claim?</li>
+</ol>
+<p>With the following graphs I am attempting to describe if people are biased enough toward newer games to support new releases.</p>
+<p>Looking at the Steam games distribution, <strong>older games with fewer reviews tend to fade into obscurity</strong> while <strong>newer releases consistently attract player attention regardless of size</strong>. Although technically competing with established giants, <strong>the market remains receptive to new entries</strong> as shown by the varied review counts across recent years, demonstrating that <strong>players still give new games a fair chance</strong> despite the crowded marketplace.</p>
+<div id="cell-13" class="cell" data-execution_count="27">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -386,12 +472,12 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-13" class="cell" data-execution_count="6">
+<div id="cell-14" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -407,12 +493,15 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-14" class="cell" data-execution_count="10">
+<section id="svc-graph-explination" class="level3">
+<h3 class="anchored" data-anchor-id="svc-graph-explination">SVC graph explination</h3>
+<p>Looking at the Steam games distribution, older games with fewer reviews tend to fade into obscurity while newer releases consistently attract player attention regardless of size. Although technically competing with established giants, the market remains receptive to new entries as shown by the varied review counts across recent years, demonstrating that players still give new games a fair chance despite the crowded marketplace.</p>
+<div id="cell-16" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -432,12 +521,16 @@ Projected increase from today to January 01, 2026: 12,028 games</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-15" class="cell">
+</section>
+<section id="multi-svc" class="level3">
+<h3 class="anchored" data-anchor-id="multi-svc">Multi SVC</h3>
+<p>This chart uses SVM decision boundaries to illustrate how recent review activity varies across Steam games over time. The purple boundary (1000+ recent reviews) demonstrates that mega hits maintain significant player engagement years after release, with some titles from as far back as 2012 still generating substantial activity. The red and green boundaries (100+ and 10+ recent reviews) show more modest but still notable engagement patterns. The visualization confirms that established blockbusters dominate player attention long-term, creating persistent competitive pressure from legacy titles. However, the substantial presence of games within the middle boundaries indicates moderate success remains achievable, suggesting the market, while challenging, isn’t completely closed to newer entrants despite the enduring influence of major hits.</p>
+<div id="cell-18" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
@@ -462,7 +555,7 @@ Best parameters: {'C': 100, 'class_weight': None, 'gamma': 1}
 Best cross-validation F1 score: 0.7833</code></pre>
 </div>
 </div>
-<div id="cell-16" class="cell" data-execution_count="5">
+<div id="cell-19" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -479,15 +572,16 @@ Best cross-validation F1 score: 0.7833</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="final_files/figure-html/cell-10-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="final_files/figure-html/cell-11-output-2.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
+</section>
 <section id="kde---publisher-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="kde---publisher-statistics">KDE - Publisher Statistics</h2>
-<div id="cell-19" class="cell" data-execution_count="6">
+<div id="cell-21" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
@@ -507,13 +601,8 @@ Best cross-validation F1 score: 0.7833</code></pre>
 </div>
 </section>
 </section>
-<section id="predictive-modeling" class="level1">
-<h1>Predictive Modeling</h1>
-<section id="predicting-market-competitors" class="level2">
-<h2 class="anchored" data-anchor-id="predicting-market-competitors">Predicting Market Competitors</h2>
-</section>
-<section id="pca---feature-engineering" class="level2">
-<h2 class="anchored" data-anchor-id="pca---feature-engineering">PCA - Feature engineering</h2>
+<section id="what-are-factors-are-most-impactiful-for-getting-new-players-to-join" class="level1">
+<h1>What are “factors” are most impactiful for getting new players to join?</h1>
 <div id="cell-23" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
@@ -563,16 +652,172 @@ Most successful price points:
 </div>
 </div>
 </div>
-</section>
-<section id="logistic-regression" class="level2">
-<h2 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h2>
-</section>
-<section id="cross-validation" class="level2">
-<h2 class="anchored" data-anchor-id="cross-validation">Cross Validation</h2>
+<section id="pca---discussion" class="level2">
+<h2 class="anchored" data-anchor-id="pca---discussion">PCA - Discussion</h2>
+<p>The PCA implementation reveals critical insights about feature effectiveness across different competitor thresholds. For the initial 10+ recent reviews threshold, <strong>simply having any reviews at all proved to be a dominant predictor</strong>, as games rarely fall into the 1-9 reviews range. This makes competitor detection at this threshold relatively straightforward. However, when shifting to the more challenging 100+ reviews threshold, <strong>the prediction task becomes substantially more difficult and less trivial</strong>. The PCA confirms that features highly effective for the 10+ threshold lose much of their predictive power at higher thresholds, requiring more sophisticated feature combinations. This explains the selection of these particular features for the model, as they offered the best performance for discriminating between truly competitive games (100+ recent reviews) rather than simply detecting minimal market presence. The PCA dimensionality reduction clearly illustrates this complexity shift between threshold levels.</p>
 </section>
 </section>
-<section id="conclusions---analysis-and-discussion" class="level1">
-<h1>Conclusions - Analysis and discussion</h1>
+<section id="market-competitiveness-prediction-through-indirect-predictors" class="level1">
+<h1>Market Competitiveness Prediction Through Indirect Predictors</h1>
+<p>The data demonstrates the feasibility of predicting market competitors through indirect metrics using Random Forest modeling. Defining market competitors as games with 100+ recent reviews (representing only 1.8% of the total marketplace), the analysis achieved impressive performance metrics (accuracy: 0.992, precision: 0.863, recall: 0.658, F1 score: 0.747) through 5-fold cross-validation. The model effectively identifies commercially successful titles despite the extreme class imbalance in the dataset. Feature importance analysis reveals that recent positive review percentage (0.3560) is the dominant predictor of competitive status, significantly outweighing traditional volume metrics. Other influential factors include peak concurrent users (0.2017), positive review count (0.1498), negative review count (0.1187), and total positive review percentage (0.0533). This suggests that player sentiment and engagement quality are substantially more predictive of marketplace success than raw engagement volume, challenging conventional metrics focused primarily on total sales or downloads. The model’s strength in precision over recall indicates it’s more conservative in predicting competitive status, minimizing false positives while accepting some false negatives—a valuable characteristic for developers seeking to realistically assess their competitive positioning.</p>
+<section id="rf-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="rf-experiment">RF experiment</h2>
+<div id="cell-25" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> cs670</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> importlib</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>importlib.<span class="bu">reload</span>(cs670.qh)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> cs670.qh.analyze_steam_competitors_rf(df)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># # Access the misclassification analysis</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(analysis[<span class="st">'summary'</span>])</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># # View figures</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>analysis[<span class="st">'figures'</span>][<span class="st">'confusion_matrix'</span>].show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Running Random Forest analysis with 5-fold cross-validation...
+Market competitor definition: 100+ recent reviews
+Skipping confidence ellipses due to error: Array must not contain infs or NaNs
+Random Forest Model Performance for 100+ Recent Reviews:
+-------------------------------
+Data: 89,618 games, 1,590 competitors (1.8%)
+Accuracy: 0.992
+Precision: 0.863
+Recall: 0.658
+F1 Score: 0.747
+
+Misclassification Analysis:
+--------------------------
+False Positives: 166 games (0.2% of all games)
+False Negatives: 543 games (0.6% of all games)
+Low Confidence True Positives: 112 games (7.0% of all competitors)
+
+Key Insights:
+------------
+False Positives (predicted as competitors but aren't):
+  • Avg total reviews: 18943.5, Avg recent reviews: 67.6
+  • peak_ccu: 85.7% lower than actual competitors
+  • positive: 66.2% lower than actual competitors
+  • negative: 53.1% lower than actual competitors
+
+False Negatives (actual competitors predicted as non-competitors):
+  • Avg total reviews: 13294.9, Avg recent reviews: 428.8
+  • peak_ccu: 95.1% lower than typical competitors
+  • positive: 91.2% lower than typical competitors
+  • negative: 89.2% lower than typical competitors
+
+Low Confidence True Positives (correct but uncertain predictions):
+  • Avg total reviews: 17886.8, Avg recent reviews: 256.9
+  • peak_ccu: 82.0% lower than typical competitors
+  • negative: 64.6% lower than typical competitors
+  • positive: 64.4% lower than typical competitors
+
+Top 5 features for predicting market competitors:
+  1. pct_pos_recent: 0.3560
+  2. peak_ccu: 0.2017
+  3. positive: 0.1498
+  4. negative: 0.1187
+  5. pct_pos_total: 0.0533
+
+Random Forest Model Performance for 100+ Recent Reviews:
+-------------------------------
+Data: 89,618 games, 1,590 competitors (1.8%)
+Accuracy: 0.992
+Precision: 0.863
+Recall: 0.658
+F1 Score: 0.747
+
+Misclassification Analysis:
+--------------------------
+False Positives: 166 games (0.2% of all games)
+False Negatives: 543 games (0.6% of all games)
+Low Confidence True Positives: 112 games (7.0% of all competitors)
+
+Key Insights:
+------------
+False Positives (predicted as competitors but aren't):
+  • Avg total reviews: 18943.5, Avg recent reviews: 67.6
+  • peak_ccu: 85.7% lower than actual competitors
+  • positive: 66.2% lower than actual competitors
+  • negative: 53.1% lower than actual competitors
+
+False Negatives (actual competitors predicted as non-competitors):
+  • Avg total reviews: 13294.9, Avg recent reviews: 428.8
+  • peak_ccu: 95.1% lower than typical competitors
+  • positive: 91.2% lower than typical competitors
+  • negative: 89.2% lower than typical competitors
+
+Low Confidence True Positives (correct but uncertain predictions):
+  • Avg total reviews: 17886.8, Avg recent reviews: 256.9
+  • peak_ccu: 82.0% lower than typical competitors
+  • negative: 64.6% lower than typical competitors
+  • positive: 64.4% lower than typical competitors
+
+Top 5 features for predicting market competitors:
+  1. pct_pos_recent: 0.3560
+  2. peak_ccu: 0.2017
+  3. positive: 0.1498
+  4. negative: 0.1187
+  5. pct_pos_total: 0.0533
+</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_files/figure-html/cell-14-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_files/figure-html/cell-14-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_files/figure-html/cell-14-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="misclassification-heatmap-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="misclassification-heatmap-analysis">Misclassification Heatmap Analysis</h3>
+<p>The misclassification heatmap exposes the model’s key performance characteristics in predicting market competitors. <strong>The model excels at correctly identifying smaller games that aren’t competitors</strong>, effectively filtering out titles with minimal market presence. However, <strong>it significantly underperforms when evaluating older games with substantial review counts</strong>. This failure manifests as a cluster of false negatives—games that are actually market competitors but predicted as non-competitors. The visualization clearly demonstrates that while total review count and release date work well for newer titles, <strong>these features alone cannot accurately determine whether an established game maintains current commercial viability</strong>. The model essentially fails to distinguish between “has-been” titles and those that continue generating significant revenue years after release. To improve prediction accuracy, features that better capture recent engagement patterns and current market momentum beyond simple review tallies are needed.</p>
+</section>
+<section id="cross-validation-summary" class="level3">
+<h3 class="anchored" data-anchor-id="cross-validation-summary">Cross-Validation Summary</h3>
+<p>The cross-validation implementation used stratified k-fold validation to address class imbalance and provide reliable performance metrics. <strong>Precision consistently exceeded recall</strong>, indicating the Random Forest classifier is more conservative in labeling games as competitors. The code identified <strong>systematic misclassification patterns</strong> that persisted across validation folds, particularly with older titles having high total reviews but lower recent engagement. These consistent errors across folds suggest limitations in the feature set rather than algorithmic problems. The validation process quantified both the model’s strengths in filtering small games and its weaknesses in evaluating established titles.</p>
+</section>
+</section>
+</section>
+<section id="impact" class="level1">
+<h1>Impact</h1>
+<section id="steam-marketplace-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="steam-marketplace-analysis">Steam Marketplace Analysis</h2>
+<p>While data confirms that mega-hits maintain remarkable staying power, <strong>the market reality is more complex than simple entrenchment</strong>. The SVM boundary visualization demonstrates that <strong>established blockbusters occupy a persistent but proportionally small segment of the overall marketplace</strong>. These legacy titles comprise <strong>less than 0.4% of all games</strong> while commanding substantial player attention, creating an asymmetric competitive environment.</p>
+<p><strong>The temporal analysis reveals a natural decay pattern even among successful titles</strong>. Games experience a gradual erosion of engagement over time, with <strong>the steepest decline typically occurring between 3-5 years post-release</strong>. This decay creates continual opportunities for new entrants despite the apparent entrenchment of major hits. The substantial presence of moderately successful games within the middle boundaries (10+ and 100+ recent reviews) indicates that <strong>meaningful commercial success remains achievable for newer titles</strong>.</p>
+</section>
+<section id="critical-success-factors" class="level2">
+<h2 class="anchored" data-anchor-id="critical-success-factors">Critical Success Factors</h2>
+<p>The most significant finding concerns the primary driver of commercial longevity. The feature importance analysis identified <strong>recent positive review percentage (0.3560) as significantly more predictive of market competitiveness than any volume-based metric</strong>. This suggests that <strong>player rapport—the meaningful connection between developers and their audience—represents the critical factor in sustained commercial viability</strong>. Even massive legacy titles eventually fade without maintaining this player relationship.</p>
+</section>
+<section id="strategic-implications-for-developers" class="level2">
+<h2 class="anchored" data-anchor-id="strategic-implications-for-developers">Strategic Implications for Developers</h2>
+<p>For developers concerned about market saturation, the research suggests <strong>a strategic focus on quality and player engagement rather than attempting to compete directly with established titles</strong>. The data demonstrates that <strong>players continually seek and support new experiences</strong> despite having access to successful legacy content. The <strong>12.4% of games achieving at least moderate success</strong> (10+ recent reviews) indicates substantial market receptivity to new offerings that resonate with player expectations.</p>
+<p>This evolving ecosystem with natural competitive decay represents a more accessible marketplace than commonly perceived. While competition from established titles creates genuine challenges, <strong>the data conclusively shows that quality new entries continue finding viable audiences</strong>, and even the most successful legacy games eventually yield market space as their player engagement naturally diminishes over time.</p>
+</section>
+</section>
+<section id="ai-assistance-disclaimer" class="level1">
+<h1>AI Assistance Disclaimer</h1>
+<p>I have dyslexia and use AI to assist with proofreading and structuring my written work. While I personally created all the model training code and analysis, I used AI prompting to iterate on visualization designs and to help format the text for clarity. This collaborative approach helps me communicate my research more effectively while maintaining the integrity of my original analysis and findings.</p>
 </section>
 
 </main>

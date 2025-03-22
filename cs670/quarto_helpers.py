@@ -4561,6 +4561,16 @@ from sklearn.model_selection import StratifiedKFold, cross_val_predict
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 import time
 
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import StratifiedKFold, cross_val_predict
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+import matplotlib.dates as mdates
+import time
+
 def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_estimators=100, 
                                 max_depth=None, prob_threshold=0.6):
     """
@@ -4671,7 +4681,6 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
     
     # Create confusion matrix
     cm = confusion_matrix(y, y_pred)
-    cm_normalized = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
     
     # Train a final model for feature importance
     final_rf = RandomForestClassifier(
@@ -4696,16 +4705,25 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
     data['predicted_probability'] = y_proba[:, 1]
     data['predicted_class'] = y_pred
     
-    # 1. False Positives: Predicted as competitor but actually not
-    false_positives = data[(data['predicted_class'] == 1) & (data['is_competitor'] == 0)].copy()
+    # Create classification categories
+    data['classification_result'] = 'Correct'
     
-    # 2. False Negatives: Predicted as non-competitor but actually is
-    false_negatives = data[(data['predicted_class'] == 0) & (data['is_competitor'] == 1)].copy()
+    # Correct predictions
+    data.loc[(data['is_competitor'] == 0) & (data['predicted_class'] == 0), 'classification_result'] = 'True Negative'
+    data.loc[(data['is_competitor'] == 1) & (data['predicted_class'] == 1), 'classification_result'] = 'True Positive'
     
-    # 3. Low Confidence True Positives: Correctly predicted competitors but with low confidence
-    low_conf_true_positives = data[(data['predicted_class'] == 1) & 
-                                  (data['is_competitor'] == 1) & 
-                                  (data['predicted_probability'] < prob_threshold)].copy()
+    # Misclassifications
+    data.loc[(data['is_competitor'] == 0) & (data['predicted_class'] == 1), 'classification_result'] = 'False Positive'
+    data.loc[(data['is_competitor'] == 1) & (data['predicted_class'] == 0), 'classification_result'] = 'False Negative'
+    
+    # Low confidence true positives
+    data.loc[(data['classification_result'] == 'True Positive') & 
+              (data['predicted_probability'] < prob_threshold), 'classification_result'] = 'Low Conf. True Positive'
+    
+    # Define the groups for analysis
+    false_positives = data[data['classification_result'] == 'False Positive'].copy()
+    false_negatives = data[data['classification_result'] == 'False Negative'].copy()
+    low_conf_true_positives = data[data['classification_result'] == 'Low Conf. True Positive'].copy()
     
     # Basic stats for misclassifications
     misclass_stats = {
@@ -4748,6 +4766,11 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
         if recent_review_col in group.columns:
             analysis['avg_recent_reviews'] = group[recent_review_col].mean()
             analysis['median_recent_reviews'] = group[recent_review_col].median()
+        
+        # Total reviews stats
+        if total_review_col in group.columns:
+            analysis['avg_total_reviews'] = group[total_review_col].mean()
+            analysis['median_total_reviews'] = group[total_review_col].median()
         
         # Price stats (if available)
         if 'price' in group.columns:
@@ -4823,30 +4846,157 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
     plt.tight_layout()
     figures['feature_importance'] = fig
     
-    # 3. Probability Distribution
-    fig, ax = plt.subplots(figsize=(10, 6))
-    
-    # True negatives and positives
-    sns.histplot(
-        data[data['is_competitor'] == 0]['predicted_probability'], 
-        bins=20, alpha=0.5, label='Non-Competitors', color='blue', ax=ax
-    )
-    sns.histplot(
-        data[data['is_competitor'] == 1]['predicted_probability'], 
-        bins=20, alpha=0.5, label='Competitors', color='red', ax=ax
-    )
-    
-    # Mark threshold
-    plt.axvline(x=0.5, color='black', linestyle='--', label='Decision Threshold (0.5)')
-    plt.axvline(x=prob_threshold, color='green', linestyle='--', 
-                label=f'Low Confidence Threshold ({prob_threshold})')
-    
-    ax.set_title('Probability Distribution by Actual Class', fontsize=14)
-    ax.set_xlabel('Predicted Probability of Being a Competitor', fontsize=12)
-    ax.set_ylabel('Count', fontsize=12)
-    ax.legend()
-    plt.tight_layout()
-    figures['probability_distribution'] = fig
+    # 3. Misclassification Heatmap on Time vs Total Reviews
+    if 'release_date' in data.columns and total_review_col in data.columns:
+        fig, ax = plt.subplots(figsize=(12, 8))
+        
+        # Create a custom color map for classification results
+        color_map = {
+            'True Negative': 'lightgray',
+            'True Positive': 'lightgreen',
+            'False Positive': 'salmon',
+            'False Negative': 'lightblue',
+            'Low Conf. True Positive': 'purple'
+        }
+        
+        # Map classification results to numeric values for the scatter plot
+        result_to_numeric = {
+            'True Negative': 0,
+            'True Positive': 1,
+            'False Positive': 2,
+            'False Negative': 3,
+            'Low Conf. True Positive': 4
+        }
+        
+        # Add mapping to data
+        data['result_numeric'] = data['classification_result'].map(result_to_numeric)
+        
+        # Create scatter plot
+        scatter = ax.scatter(
+            data[total_review_col],
+            data['release_date'],
+            c=data['result_numeric'], 
+            cmap=plt.cm.get_cmap('Spectral', 5),
+            alpha=0.7,
+            s=40
+        )
+        
+        # Set log scale for x-axis
+        ax.set_xscale('log')
+        
+        # Format the y-axis as dates
+        ax.yaxis.set_major_formatter(mdates.DateFormatter('%Y'))
+        ax.yaxis.set_major_locator(mdates.YearLocator(2))
+        
+        # Add labels and title
+        ax.set_xlabel('Total Reviews (log scale)', fontsize=14)
+        ax.set_ylabel('Release Date', fontsize=14)
+        ax.set_title('Classification Results by Release Date and Total Reviews', fontsize=16)
+        
+        # Add a legend
+        from matplotlib.lines import Line2D
+        legend_elements = [
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=color_map['True Negative'], 
+                  markersize=10, label='True Negative'),
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=color_map['True Positive'], 
+                  markersize=10, label='True Positive'),
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=color_map['False Positive'], 
+                  markersize=10, label='False Positive'),
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=color_map['False Negative'], 
+                  markersize=10, label='False Negative'),
+            Line2D([0], [0], marker='o', color='w', markerfacecolor=color_map['Low Conf. True Positive'], 
+                  markersize=10, label='Low Conf. True Positive')
+        ]
+        ax.legend(handles=legend_elements, loc='upper right')
+        
+        # Add reference lines for total review thresholds
+        review_thresholds = [10, 100, 1000, 10000, 100000]
+        for threshold in review_thresholds:
+            if threshold <= data[total_review_col].max():
+                ax.axvline(x=threshold, color='gray', linestyle='--', alpha=0.3)
+                y_pos = ax.get_ylim()[0]  # Bottom of the plot
+                ax.text(threshold*1.1, y_pos, f"{threshold:,}", 
+                       fontsize=9, rotation=90, verticalalignment='bottom')
+        
+        # Add concentration ellipses for misclassification groups if there are enough data points
+        try:
+            from matplotlib.patches import Ellipse
+            
+            def add_confidence_ellipse(group_data, color, label, alpha=0.2):
+                if len(group_data) < 10:
+                    return
+                
+                # Convert dates to numeric
+                x = np.log10(group_data[total_review_col] + 1)  # Add 1 to handle zeros
+                y = group_data['days_since_release']
+                
+                # Calculate means
+                mean_x = np.mean(x)
+                mean_y = np.mean(y)
+                
+                # Calculate covariance
+                cov = np.cov(x, y)
+                
+                # Get eigenvalues and eigenvectors
+                eigenvalues, eigenvectors = np.linalg.eig(cov)
+                
+                # Sort eigenvalues and eigenvectors
+                idx = eigenvalues.argsort()[::-1]
+                eigenvalues = eigenvalues[idx]
+                eigenvectors = eigenvectors[:, idx]
+                
+                # Calculate angle in degrees
+                angle = np.degrees(np.arctan2(eigenvectors[1, 0], eigenvectors[0, 0]))
+                
+                # Calculate width and height
+                width = 2 * np.sqrt(5.991 * eigenvalues[0])  # 95% confidence
+                height = 2 * np.sqrt(5.991 * eigenvalues[1])
+                
+                # Convert back to original scale
+                x_orig = 10**mean_x - 1
+                
+                # Create the ellipse
+                ellipse = Ellipse(
+                    (x_orig, mean_y),
+                    width=x_orig * width,  # Adjust for log scale
+                    height=height,
+                    angle=angle,
+                    facecolor=color,
+                    alpha=alpha,
+                    edgecolor='black',
+                    linewidth=1
+                )
+                
+                # Add ellipse to the plot
+                ax.add_patch(ellipse)
+                
+                # Add label
+                ax.text(
+                    x_orig,
+                    mean_y,
+                    label,
+                    ha='center',
+                    va='center',
+                    fontsize=10,
+                    fontweight='bold',
+                    color='black'
+                )
+            
+            # Add ellipses for each misclassification group
+            if len(false_positives) >= 10:
+                add_confidence_ellipse(false_positives, 'red', 'False Positives')
+            
+            if len(false_negatives) >= 10:
+                add_confidence_ellipse(false_negatives, 'blue', 'False Negatives')
+            
+            if len(low_conf_true_positives) >= 10:
+                add_confidence_ellipse(low_conf_true_positives, 'purple', 'Low Conf. TPs')
+                
+        except Exception as e:
+            print(f"Skipping confidence ellipses due to error: {e}")
+        
+        plt.tight_layout()
+        figures['misclassification_heatmap'] = fig
     
     # Create a text summary of findings
     def format_number(x):
@@ -4884,6 +5034,11 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
         actual = misclass_analysis['actual_competitors']
         summary += f"False Positives (predicted as competitors but aren't):\n"
         
+        # Add total and recent reviews stats
+        if 'avg_total_reviews' in fp and 'avg_recent_reviews' in fp:
+            summary += f"  • Avg total reviews: {fp['avg_total_reviews']:.1f}, " + \
+                     f"Avg recent reviews: {fp['avg_recent_reviews']:.1f}\n"
+        
         # Compare with actual competitors
         differences = []
         for feature, value in fp['avg_features'].items():
@@ -4898,10 +5053,6 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
                 summary += f"  • {feature}: {abs(diff_pct):.1f}% {direction} than actual competitors\n"
         
         # Add specific insights based on available data
-        if 'avg_recent_reviews' in fp:
-            summary += f"  • Average recent reviews: {fp['avg_recent_reviews']:.1f} " + \
-                     f"(below threshold: {recent_review_threshold})\n"
-        
         if 'avg_days_since_release' in fp and 'avg_days_since_release' in actual:
             if fp['avg_days_since_release'] < actual['avg_days_since_release'] * 0.7:
                 summary += f"  • These are generally newer games ({fp['avg_days_since_release']:.0f} days vs " + \
@@ -4912,6 +5063,11 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
         fn = misclass_analysis['false_negatives']
         actual = misclass_analysis['actual_competitors']
         summary += f"\nFalse Negatives (actual competitors predicted as non-competitors):\n"
+        
+        # Add total and recent reviews stats
+        if 'avg_total_reviews' in fn and 'avg_recent_reviews' in fn:
+            summary += f"  • Avg total reviews: {fn['avg_total_reviews']:.1f}, " + \
+                     f"Avg recent reviews: {fn['avg_recent_reviews']:.1f}\n"
         
         # Compare with actual competitors
         differences = []
@@ -4927,10 +5083,6 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
                 summary += f"  • {feature}: {abs(diff_pct):.1f}% {direction} than typical competitors\n"
         
         # Add specific insights
-        if 'avg_recent_reviews' in fn:
-            summary += f"  • Average recent reviews: {fn['avg_recent_reviews']:.1f} " + \
-                     f"(above threshold: {recent_review_threshold})\n"
-            
         if 'has_metacritic_pct' in fn and 'has_metacritic_pct' in actual:
             if fn['has_metacritic_pct'] < actual['has_metacritic_pct'] * 0.7:
                 summary += f"  • Less likely to have metacritic scores ({fn['has_metacritic_pct']:.1f}% vs " + \
@@ -4941,6 +5093,11 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
         lc = misclass_analysis['low_conf_true_positives']
         actual = misclass_analysis['actual_competitors']
         summary += f"\nLow Confidence True Positives (correct but uncertain predictions):\n"
+        
+        # Add total and recent reviews stats
+        if 'avg_total_reviews' in lc and 'avg_recent_reviews' in lc:
+            summary += f"  • Avg total reviews: {lc['avg_total_reviews']:.1f}, " + \
+                     f"Avg recent reviews: {lc['avg_recent_reviews']:.1f}\n"
         
         # Compare with other competitors
         differences = []
@@ -4954,12 +5111,6 @@ def analyze_steam_competitors_rf(df, recent_review_threshold=100, n_splits=5, n_
             for feature, diff_pct in sorted(differences, key=lambda x: abs(x[1]), reverse=True)[:3]:
                 direction = "higher" if diff_pct > 0 else "lower"
                 summary += f"  • {feature}: {abs(diff_pct):.1f}% {direction} than typical competitors\n"
-        
-        # Add specific insights
-        if 'avg_recent_reviews' in lc and 'avg_recent_reviews' in actual:
-            if lc['avg_recent_reviews'] < actual['avg_recent_reviews'] * 0.6:
-                summary += f"  • Fewer recent reviews ({lc['avg_recent_reviews']:.1f} vs " + \
-                         f"{actual['avg_recent_reviews']:.1f} for typical competitors)\n"
                 
         if 'avg_days_since_release' in lc and 'avg_days_since_release' in actual:
             if lc['avg_days_since_release'] > actual['avg_days_since_release'] * 1.5:
